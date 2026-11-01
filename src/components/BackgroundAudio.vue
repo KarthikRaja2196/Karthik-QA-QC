@@ -1,55 +1,72 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-const isMuted = ref(false)
 const isPlaying = ref(false)
+const isMuted = ref(false)
+const needInteraction = ref(true)
 const audioRef = ref<HTMLAudioElement | null>(null)
 
-function startAudio() {
+async function tryPlay() {
+  if (!audioRef.value) return
+  try {
+    audioRef.value.volume = isMuted.value ? 0 : 0.5
+    await audioRef.value.play()
+    isPlaying.value = true
+    needInteraction.value = false
+    removeListeners()
+  } catch (err) {
+    // Autoplay blocked by external browser policy until user interacts
+    isPlaying.value = false
+    needInteraction.value = true
+  }
+}
+
+function handleInteraction() {
+  if (!isPlaying.value) {
+    tryPlay()
+  }
+}
+
+function toggleSound() {
   if (!audioRef.value) return
   if (!isPlaying.value) {
-    audioRef.value.volume = isMuted.value ? 0 : 0.45
-    audioRef.value
-      .play()
-      .then(() => {
-        isPlaying.value = true
-        removeUserInteractionListeners()
-      })
-      .catch(() => {
-        // Autoplay wait for user gesture
-      })
+    // Direct user click - guaranteed by browser to allow playback
+    isMuted.value = false
+    audioRef.value.muted = false
+    tryPlay()
+  } else {
+    // Toggle mute
+    isMuted.value = !isMuted.value
+    audioRef.value.muted = isMuted.value
   }
 }
 
-function toggleMute() {
-  if (!audioRef.value) return
-  isMuted.value = !isMuted.value
-  audioRef.value.muted = isMuted.value
-  if (!isPlaying.value && !isMuted.value) {
-    startAudio()
-  }
+const events = ['pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'click']
+
+function attachListeners() {
+  if (typeof window === 'undefined') return
+  events.forEach((evt) => {
+    document.addEventListener(evt, handleInteraction, { capture: true, once: true })
+  })
 }
 
-function onFirstUserGesture() {
-  startAudio()
-}
-
-function removeUserInteractionListeners() {
-  window.removeEventListener('click', onFirstUserGesture)
-  window.removeEventListener('keydown', onFirstUserGesture)
-  window.removeEventListener('touchstart', onFirstUserGesture)
+function removeListeners() {
+  if (typeof window === 'undefined') return
+  events.forEach((evt) => {
+    document.removeEventListener(evt, handleInteraction, { capture: true })
+  })
 }
 
 onMounted(() => {
-  // Try autoplay, and also attach first gesture listener
-  startAudio()
-  window.addEventListener('click', onFirstUserGesture, { once: true })
-  window.addEventListener('keydown', onFirstUserGesture, { once: true })
-  window.addEventListener('touchstart', onFirstUserGesture, { once: true })
+  // 1. Attempt immediate play (will succeed if user previously interacted or browser allows)
+  tryPlay()
+
+  // 2. Attach capture listeners for any touch, click, key, or tap
+  attachListeners()
 })
 
 onBeforeUnmount(() => {
-  removeUserInteractionListeners()
+  removeListeners()
   if (audioRef.value) {
     audioRef.value.pause()
   }
@@ -57,92 +74,150 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="bg-audio-container">
-    <!-- Invisible background audio element -->
+  <div class="bg-sound-container">
+    <!-- Background Audio Element -->
     <audio
       ref="audioRef"
       src="/audio/honourable.mp3"
       loop
       preload="auto"
+      playsinline
     ></audio>
 
-    <!-- Subtle, discreet sound toggle button (no track info, no tracking, no video) -->
+    <!-- Floating Sound Pill: prompts visitor if browser blocked autoplay, or lets them mute -->
     <button
       type="button"
-      class="discreet-sound-btn"
-      :class="{ muted: isMuted || !isPlaying }"
-      :aria-label="isMuted ? 'Unmute background music' : 'Mute background music'"
-      :title="isMuted ? 'Sound off — click to enable' : 'Sound on — click to mute'"
-      @click="toggleMute"
+      class="sound-pill mono"
+      :class="{
+        'needs-tap': needInteraction && !isPlaying,
+        'playing': isPlaying && !isMuted,
+        'muted': isMuted
+      }"
+      :aria-label="isPlaying && !isMuted ? 'Mute sound' : 'Enable sound'"
+      @click.stop="toggleSound"
     >
-      <svg
-        v-if="!isMuted && isPlaying"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-      </svg>
-      <svg
-        v-else
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-        <line x1="23" y1="9" x2="17" y2="15"></line>
-        <line x1="17" y1="9" x2="23" y2="15"></line>
-      </svg>
+      <span class="sound-icon" aria-hidden="true">
+        <svg
+          v-if="isPlaying && !isMuted"
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <svg
+          v-else
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </span>
+
+      <span class="sound-text">
+        <template v-if="needInteraction && !isPlaying">
+          🔊 Tap to Play Sound
+        </template>
+        <template v-else-if="isPlaying && !isMuted">
+          Sound: On
+        </template>
+        <template v-else>
+          Sound: Muted
+        </template>
+      </span>
     </button>
   </div>
 </template>
 
 <style scoped>
-.bg-audio-container {
+.bg-sound-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 40;
+  bottom: 22px;
+  right: 22px;
+  z-index: 999;
 }
 
-.discreet-sound-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(18, 10, 36, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
+.sound-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(23, 14, 46, 0.88);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ede4ff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+}
+
+.sound-pill:hover {
+  transform: translateY(-2px);
+  border-color: #a78bfa;
+  background: rgba(36, 23, 63, 0.95);
+  box-shadow: 0 12px 30px -4px rgba(109, 40, 217, 0.5);
+}
+
+/* Pulsing highlight when waiting for external browser interaction */
+.sound-pill.needs-tap {
+  background: rgba(109, 40, 217, 0.85);
+  border-color: #c4b5fd;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+  animation: tap-pulse 2s infinite ease-in-out;
+}
+
+@keyframes tap-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 16px rgba(109, 40, 217, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 28px rgba(167, 139, 250, 0.8);
+  }
+}
+
+.sound-pill.muted {
+  opacity: 0.6;
   color: var(--muted);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.sound-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  opacity: 0.65;
 }
 
-.discreet-sound-btn:hover {
-  opacity: 1;
-  color: #fff;
-  border-color: rgba(167, 139, 250, 0.4);
-  background: rgba(28, 18, 54, 0.9);
-  transform: scale(1.08);
+.sound-text {
+  letter-spacing: 0.02em;
 }
 
-.discreet-sound-btn.muted {
-  opacity: 0.45;
-  color: #8c7ea8;
+@media (max-width: 480px) {
+  .bg-sound-container {
+    bottom: 16px;
+    right: 16px;
+  }
 }
 </style>
