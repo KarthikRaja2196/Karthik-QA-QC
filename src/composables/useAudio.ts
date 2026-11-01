@@ -1,16 +1,17 @@
 import { ref, computed } from 'vue'
 
-// Shared singleton reactive state for the audio player
+// Shared singleton reactive state for the audio & video player
 const isPlaying = ref(false)
-const volume = ref(0.65)
+const volume = ref(0.7)
 const isMuted = ref(false)
 const currentTime = ref(0)
-const duration = ref(32)
-const trackName = ref('Honourable')
-const trackSubtitle = ref('Official Background Theme')
+const duration = ref(134) // ~2m 14s standard duration for WE ON GO
+const trackName = ref('WE ON GO')
+const trackSubtitle = ref('BIA (Prod. by Honorable C.N.O.T.E.)')
 const trackSrc = ref('/audio/honourable.mp3')
 const isLooping = ref(true)
 const isExpanded = ref(false)
+const isVideoModalOpen = ref(false)
 const hasInteracted = ref(false)
 const showAutoplayPrompt = ref(false)
 const isCustomFile = ref(false)
@@ -49,18 +50,8 @@ function initAudio() {
       if (!isLooping.value) isPlaying.value = false
     })
 
-    audio.addEventListener('error', () => {
-      // If .mp3 fails, fall back to .wav
-      if (trackSrc.value === '/audio/honourable.mp3') {
-        trackSrc.value = '/audio/honourable.wav'
-        if (audio) {
-          audio.src = '/audio/honourable.wav'
-          audio.load()
-          if (isPlaying.value) {
-            audio.play().catch(() => {})
-          }
-        }
-      }
+    audio.addEventListener('error', (e) => {
+      console.warn('Audio source fallback check:', e)
     })
   }
 }
@@ -128,6 +119,23 @@ export function useAudio() {
     isExpanded.value = !isExpanded.value
   }
 
+  function openVideoModal() {
+    pause() // pause audio when opening video to prevent dual playback
+    isVideoModalOpen.value = true
+  }
+
+  function closeVideoModal() {
+    isVideoModalOpen.value = false
+  }
+
+  function toggleVideoModal() {
+    if (isVideoModalOpen.value) {
+      closeVideoModal()
+    } else {
+      openVideoModal()
+    }
+  }
+
   function loadCustomFile(file: File) {
     initAudio()
     if (!audio) return
@@ -164,6 +172,7 @@ export function useAudio() {
     trackSrc,
     isLooping,
     isExpanded,
+    isVideoModalOpen,
     hasInteracted,
     showAutoplayPrompt,
     isCustomFile,
@@ -175,6 +184,9 @@ export function useAudio() {
     seek,
     toggleLoop,
     toggleExpanded,
+    openVideoModal,
+    closeVideoModal,
+    toggleVideoModal,
     loadCustomFile,
   }
 }

@@ -21,7 +21,7 @@ import {
 const { activeId } = useActiveSection([...navLinks.map((l) => l.id), 'contact'])
 
 // Global Audio player state
-const { isPlaying, togglePlay, trackName } = useAudio()
+const { isPlaying, togglePlay, trackName, openVideoModal } = useAudio()
 
 // Pointer position over the hero, normalised to -1…1, drives the robot's head and eyes.
 const look = ref({ x: 0, y: 0 })
@@ -72,16 +72,32 @@ function onCardMove(e: PointerEvent) {
           <div class="mono status-pill">
             <span class="pulse"></span> Available for freelance projects
           </div>
-          <!-- BGM quick control in hero -->
+          <!-- Audi 4-Rings BGM Audio Button -->
           <button
             type="button"
-            class="hero-music-pill mono"
-            :title="isPlaying ? 'Pause Honourable background track' : 'Play Honourable background track'"
+            class="hero-audi-pill mono"
+            :class="{ active: isPlaying }"
+            :title="isPlaying ? 'Pause WE ON GO (BIA · Honorable C.N.O.T.E.)' : 'Play WE ON GO (BIA · Honorable C.N.O.T.E.)'"
             @click="togglePlay"
           >
-            <span class="speaker">{{ isPlaying ? '🔊' : '🎵' }}</span>
-            <span>BGM: <strong class="song-title">{{ trackName }}</strong></span>
+            <svg viewBox="0 0 84 32" class="audi-hero-rings" aria-hidden="true">
+              <circle class="ring r1" cx="16" cy="16" r="11" />
+              <circle class="ring r2" cx="32" cy="16" r="11" />
+              <circle class="ring r3" cx="48" cy="16" r="11" />
+              <circle class="ring r4" cx="64" cy="16" r="11" />
+            </svg>
+            <span class="song-title">{{ trackName }}</span>
             <span class="music-action">[{{ isPlaying ? 'Pause' : 'Play' }}]</span>
+          </button>
+
+          <!-- Watch Video Button -->
+          <button
+            type="button"
+            class="hero-video-pill mono"
+            title="Watch BIA - WE ON GO official lyric video"
+            @click="openVideoModal"
+          >
+            🎬 Watch Video
           </button>
         </div>
 
@@ -380,6 +396,82 @@ function onCardMove(e: PointerEvent) {
 .music-action {
   color: var(--accent-soft);
   font-weight: 700;
+}
+
+.hero-audi-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 999px;
+  background: rgba(28, 18, 54, 0.75);
+  border: 1.5px solid rgba(167, 139, 250, 0.4);
+  font-size: 12.5px;
+  color: #e2d9f7;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hero-audi-pill:hover {
+  background: rgba(109, 40, 217, 0.3);
+  border-color: #a78bfa;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(109, 40, 217, 0.5);
+}
+
+.hero-audi-pill.active {
+  background: rgba(109, 40, 217, 0.38);
+  border-color: #c4b5fd;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.6);
+}
+
+.audi-hero-rings {
+  width: 44px;
+  height: 18px;
+  fill: none;
+  stroke: #c4b5fd;
+  stroke-width: 2.8;
+  filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.5));
+}
+
+.hero-audi-pill.active .audi-hero-rings {
+  stroke: #ede4ff;
+  filter: drop-shadow(0 0 8px rgba(196, 181, 253, 0.9));
+}
+
+.hero-audi-pill.active .ring {
+  animation: hero-ring-wave 1.3s infinite ease-in-out alternate;
+}
+
+.hero-audi-pill.active .r1 { animation-delay: 0s; }
+.hero-audi-pill.active .r2 { animation-delay: 0.2s; }
+.hero-audi-pill.active .r3 { animation-delay: 0.4s; }
+.hero-audi-pill.active .r4 { animation-delay: 0.6s; }
+
+@keyframes hero-ring-wave {
+  0% { transform: scale(1); stroke: #a78bfa; }
+  100% { transform: scale(1.1); stroke: #38bdf8; }
+}
+
+.hero-video-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1.5px solid rgba(239, 68, 68, 0.45);
+  font-size: 12.5px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hero-video-pill:hover {
+  background: #ef4444;
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.6);
+  transform: translateY(-2px);
 }
 
 .footer-meta {

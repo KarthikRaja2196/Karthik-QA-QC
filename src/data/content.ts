@@ -8,7 +8,10 @@ export const profile = {
   whatsappHref: 'https://wa.me/918148968330?text=Hi%20Karthik,%20I%20saw%20your%20QA%20Automation%20portfolio',
   location: 'Tamil Nadu, India · Remote Worldwide',
   availability: 'Available for freelance frameworks & QA consulting',
-  bgmTrack: 'Honourable',
+  bgmTrack: 'WE ON GO',
+  bgmArtist: 'BIA (Prod. by Honorable C.N.O.T.E.)',
+  youtubeId: '09iWwRsxVGo',
+  videoUrl: 'https://www.youtube.com/watch?v=09iWwRsxVGo',
 }
 
 export const navLinks = [
