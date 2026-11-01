@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import NavBar from './components/NavBar.vue'
-import QaBot from './components/QaBot.vue'
+import TechHandOrbit from './components/TechHandOrbit.vue'
 import TypedRoles from './components/TypedRoles.vue'
 import TechMarquee from './components/TechMarquee.vue'
 import TestRunCard from './components/TestRunCard.vue'
@@ -109,7 +109,7 @@ function onCardMove(e: PointerEvent) {
       </div>
 
       <div class="rise d3 hero-visual">
-        <QaBot :mx="look.x" :my="look.y" />
+        <TechHandOrbit :mx="look.x" :my="look.y" />
         <div class="card-slot">
           <TestRunCard />
         </div>
