@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "savedAt": "2026-10-11T21:42:39.231Z",
+  "agents": [
+    {
+      "id": "god",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "god — runs the floor, triages requests, escalates only critical calls to you",
+      "project": "hive",
+      "tmuxTarget": "",
+      "cwd": "C:\\My stuffs\\My Portfolio",
+      "status": "idle",
+      "action": "awaiting",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-god",
+      "command": "gemini --approval-mode=yolo",
+      "provider": "gemini",
+      "isGod": true,
+      "terminalGeneration": 1
+    },
+    {
+      "id": "jim-mv49ltpt",
+      "name": "Jim",
+      "character": "jim",
+      "accent": "sky",
+      "description": "a fresh harness",
+      "project": "C:\\My stuffs\\My Portfolio",
+      "tmuxTarget": "",
+      "cwd": "C:\\My stuffs\\My Portfolio",
+      "status": "idle",
+      "action": "awaiting",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-jim-mv49ltpt",
+      "command": "gemini --model pro --approval-mode=yolo",
+      "provider": "gemini",
+      "model": "pro",
+      "archived": false
+    }
+  ],
+  "archived": [],
+  "restorable": [],
+  "queues": {},
+  "selectedId": "jim-mv49ltpt"
+}

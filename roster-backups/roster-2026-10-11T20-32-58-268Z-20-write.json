@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "savedAt": "2026-10-11T20:32:54.850Z",
+  "agents": [],
+  "archived": [],
+  "restorable": [
+    {
+      "id": "jim-mv49ltpt",
+      "name": "Jim",
+      "character": "jim",
+      "accent": "sky",
+      "description": "a fresh harness",
+      "project": "C:\\My stuffs\\My Portfolio",
+      "tmuxTarget": "",
+      "cwd": "C:\\My stuffs\\My Portfolio",
+      "status": "idle",
+      "action": "reconnecting…",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-jim-mv49ltpt",
+      "command": "gemini --model pro --approval-mode=yolo",
+      "provider": "gemini",
+      "model": "pro"
+    }
+  ],
+  "queues": {},
+  "selectedId": null
+}

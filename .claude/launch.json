@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "qc-portfolio",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--port", "5173", "--strictPort"],
+      "port": 5173
+    },
+    {
+      "name": "allure-report",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["http-server", "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\C--My-stuffs-My-Portfolio\\8c33564e-705c-4c7f-8173-95599fbf9603\\scratchpad\\playwright-allure-demo\\allure-report", "-p", "5050", "-c-1"],
+      "port": 5050
+    }
+  ]
+}

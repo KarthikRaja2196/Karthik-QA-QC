@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "savedAt": "2026-10-11T20:16:07.923Z",
+  "agents": [
+    {
+      "id": "god",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "god — runs the floor, triages requests, escalates only critical calls to you",
+      "project": "hive",
+      "tmuxTarget": "",
+      "cwd": "C:\\My stuffs\\My Portfolio",
+      "status": "working",
+      "action": "skim commands, memory digest, project folder",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-god",
+      "command": "claude --model claude-opus-5-5 --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-opus-5-5",
+      "isGod": true
+    }
+  ],
+  "archived": [],
+  "restorable": [],
+  "queues": {},
+  "selectedId": "god"
+}

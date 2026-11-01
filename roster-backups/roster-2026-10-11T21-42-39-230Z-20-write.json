@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "savedAt": "2026-10-11T21:42:31.040Z",
+  "agents": [
+    {
+      "id": "god",
+      "name": "Michael",
+      "character": "michael",
+      "accent": "lemon",
+      "description": "god — runs the floor, triages requests, escalates only critical calls to you",
+      "project": "hive",
+      "tmuxTarget": "",
+      "cwd": "C:\\My stuffs\\My Portfolio",
+      "status": "idle",
+      "action": "awaiting",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-god",
+      "command": "gemini --approval-mode=yolo",
+      "provider": "gemini",
+      "isGod": true,
+      "terminalGeneration": 1
+    },
+    {
+      "id": "jim-mv49ltpt",
+      "name": "Jim",
+      "character": "jim",
+      "accent": "sky",
+      "description": "a fresh harness",
+      "project": "C:\\My stuffs\\My Portfolio",
+      "tmuxTarget": "",
+      "cwd": "C:\\My stuffs\\My Portfolio",
+      "status": "idle",
+      "action": "awaiting",
+      "progress": 0,
+      "currentStation": "desk",
+      "ptyId": "pty-jim-mv49ltpt",
+      "command": "gemini --model pro --approval-mode=yolo",
+      "provider": "gemini",
+      "model": "pro",
+      "archived": false
+    }
+  ],
+  "archived": [],
+  "restorable": [],
+  "queues": {
+    "god": [
+      {
+        "id": "q-1791754942586-2",
+        "text": "You have new hive inbox message(s) — at least: 2026-10-11T21-42-19-959Z-84820b. Your inbox is C:\\My stuffs\\My Portfolio\\hive\\agents\\god\\inbox. Read it, act on what is pending there, and move handled ones to inbox/.done/. Your inbox directory is authoritative: work everything still pending in it, and if a named id is already in inbox/.done/ you handled it on an earlier turn and can ignore that one. Act autonomously; only message god if you genuinely need a decision.",
+        "ts": 1791754942586,
+        "precondition": "inbox-nonempty",
+        "manual": true
+      }
+    ]
+  },
+  "selectedId": "jim-mv49ltpt"
+}

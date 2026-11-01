@@ -502,34 +502,6 @@ ul, ol { list-style: none; }
   color: #34d399;
 }
 
-/* Hero music pill callout */
-.hero-music-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: rgba(109, 40, 217, 0.18);
-  border: 1px solid rgba(167, 139, 250, 0.35);
-  font-size: 12.5px;
-  color: #e2d9f7;
-  cursor: pointer;
-  transition: all 0.2s;
-  width: fit-content;
-}
-.hero-music-pill:hover {
-  background: rgba(109, 40, 217, 0.35);
-  border-color: #a78bfa;
-  transform: translateY(-2px);
-}
-.hero-music-pill .speaker {
-  font-size: 14px;
-}
-.hero-music-pill .song-title {
-  color: #fff;
-  font-weight: 600;
-}
-
 @media (max-width: 860px) {
   .timeline-card {
     grid-template-columns: minmax(0, 1fr);
