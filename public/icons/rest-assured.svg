@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <circle cx="64" cy="64" r="56" fill="#5A67D8" />
+  <path d="M36 64 l16-16 v10 h24 v12 h-24 v10 z" fill="#FFFFFF" />
+  <path d="M92 64 l-16 16 v-10 h-24 v-12 h24 v-10 z" fill="#38BDF8" />
+  <text x="64" y="108" font-family="'JetBrains Mono', system-ui, sans-serif" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">REST-assured</text>
+</svg>

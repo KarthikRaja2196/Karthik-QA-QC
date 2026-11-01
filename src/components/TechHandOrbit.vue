@@ -23,7 +23,7 @@ interface TechTile {
   category: 'QA Stack' | 'AI Stack' | 'DevOps'
   bgGradient: string
   glowColor: string
-  iconType: string
+  iconSrc: string
   desc: string
   offsetY: number
 }
@@ -32,138 +32,138 @@ const techTiles: TechTile[] = [
   {
     name: 'Playwright',
     category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #2ead33 0%, #15571b 100%)',
-    glowColor: 'rgba(46, 173, 51, 0.75)',
-    iconType: 'playwright',
+    bgGradient: 'linear-gradient(145deg, #1E293B 0%, #0F172A 100%)',
+    glowColor: 'rgba(46, 173, 51, 0.85)',
+    iconSrc: '/icons/playwright.svg',
     desc: 'High-speed E2E & Component Testing',
-    offsetY: -22,
+    offsetY: -24,
   },
   {
     name: 'TypeScript',
     category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #3178c6 0%, #184479 100%)',
-    glowColor: 'rgba(49, 120, 198, 0.75)',
-    iconType: 'typescript',
+    bgGradient: 'linear-gradient(145deg, #3178C6 0%, #1A5494 100%)',
+    glowColor: 'rgba(49, 120, 198, 0.85)',
+    iconSrc: '/icons/typescript.svg',
     desc: 'Strict Typed Page Object Models',
-    offsetY: 18,
+    offsetY: 20,
   },
   {
     name: 'Java',
     category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #f97316 0%, #9a3412 100%)',
-    glowColor: 'rgba(249, 115, 22, 0.75)',
-    iconType: 'java',
+    bgGradient: 'linear-gradient(145deg, #FFF5ED 0%, #F5DEC9 100%)',
+    glowColor: 'rgba(234, 45, 46, 0.8)',
+    iconSrc: '/icons/java.svg',
     desc: 'Enterprise Automation & Multi-Threading',
-    offsetY: -35,
+    offsetY: -36,
+  },
+  {
+    name: 'Selenium',
+    category: 'QA Stack',
+    bgGradient: 'linear-gradient(145deg, #1F2937 0%, #111827 100%)',
+    glowColor: 'rgba(67, 176, 42, 0.85)',
+    iconSrc: '/icons/selenium.svg',
+    desc: 'WebDriver 4 Cross-Browser Grid',
+    offsetY: 24,
+  },
+  {
+    name: 'Jenkins',
+    category: 'DevOps',
+    bgGradient: 'linear-gradient(145deg, #FFFFFF 0%, #ECE9F2 100%)',
+    glowColor: 'rgba(211, 56, 51, 0.85)',
+    iconSrc: '/icons/jenkins.svg',
+    desc: 'Declarative CI/CD Pipelines & Webhooks',
+    offsetY: -28,
+  },
+  {
+    name: 'Docker',
+    category: 'DevOps',
+    bgGradient: 'linear-gradient(145deg, #2496ED 0%, #1063A5 100%)',
+    glowColor: 'rgba(36, 150, 237, 0.85)',
+    iconSrc: '/icons/docker.svg',
+    desc: 'Isolated Ephemeral Grid Runners',
+    offsetY: 16,
+  },
+  {
+    name: 'Postman',
+    category: 'QA Stack',
+    bgGradient: 'linear-gradient(145deg, #FF6C37 0%, #B83B09 100%)',
+    glowColor: 'rgba(255, 108, 55, 0.85)',
+    iconSrc: '/icons/postman.svg',
+    desc: 'Automated Newman Smoke Packs',
+    offsetY: 34,
+  },
+  {
+    name: 'GitHub',
+    category: 'DevOps',
+    bgGradient: 'linear-gradient(145deg, #24292E 0%, #0D1117 100%)',
+    glowColor: 'rgba(192, 132, 252, 0.75)',
+    iconSrc: '/icons/github.svg',
+    desc: '4x Sharded Matrix Runners',
+    offsetY: -16,
+  },
+  {
+    name: 'TestNG',
+    category: 'QA Stack',
+    bgGradient: 'linear-gradient(145deg, #E55322 0%, #8E2300 100%)',
+    glowColor: 'rgba(229, 83, 34, 0.85)',
+    iconSrc: '/icons/testng.svg',
+    desc: 'Parallel Suites & DataProviders',
+    offsetY: -32,
   },
   {
     name: 'MCPs',
     category: 'AI Stack',
-    bgGradient: 'linear-gradient(145deg, #a855f7 0%, #581c87 100%)',
-    glowColor: 'rgba(168, 85, 247, 0.85)',
-    iconType: 'mcp',
+    bgGradient: 'linear-gradient(145deg, #8B5CF6 0%, #52199C 100%)',
+    glowColor: 'rgba(139, 92, 246, 0.9)',
+    iconSrc: '/icons/mcp.svg',
     desc: 'Model Context Protocol Agents',
     offsetY: 10,
   },
   {
     name: 'AI Self-Healing',
     category: 'AI Stack',
-    bgGradient: 'linear-gradient(145deg, #06b6d4 0%, #0e7490 100%)',
-    glowColor: 'rgba(6, 182, 212, 0.8)',
-    iconType: 'ai',
+    bgGradient: 'linear-gradient(145deg, #0F172A 0%, #1E1B4B 100%)',
+    glowColor: 'rgba(56, 189, 248, 0.85)',
+    iconSrc: '/icons/ai-healing.svg',
     desc: 'Neural DOM Self-Healing Locators',
     offsetY: -48,
   },
   {
-    name: 'Jenkins',
-    category: 'DevOps',
-    bgGradient: 'linear-gradient(145deg, #ef4444 0%, #991b1b 100%)',
-    glowColor: 'rgba(239, 68, 68, 0.75)',
-    iconType: 'jenkins',
-    desc: 'Declarative CI/CD Pipelines & Webhooks',
-    offsetY: 26,
-  },
-  {
-    name: 'GitHub Actions',
-    category: 'DevOps',
-    bgGradient: 'linear-gradient(145deg, #27272a 0%, #09090b 100%)',
-    glowColor: 'rgba(161, 161, 170, 0.7)',
-    iconType: 'github',
-    desc: '4x Sharded Matrix Runners',
-    offsetY: -16,
-  },
-  {
-    name: 'Selenium',
-    category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #22c55e 0%, #14532d 100%)',
-    glowColor: 'rgba(34, 197, 94, 0.75)',
-    iconType: 'selenium',
-    desc: 'WebDriver 4 Cross-Browser Grid',
-    offsetY: 22,
-  },
-  {
-    name: 'TestNG',
-    category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #f59e0b 0%, #92400e 100%)',
-    glowColor: 'rgba(245, 158, 11, 0.75)',
-    iconType: 'testng',
-    desc: 'Parallel Suites & DataProviders',
-    offsetY: -30,
-  },
-  {
-    name: 'Docker',
-    category: 'DevOps',
-    bgGradient: 'linear-gradient(145deg, #0ea5e9 0%, #0369a1 100%)',
-    glowColor: 'rgba(14, 165, 233, 0.75)',
-    iconType: 'docker',
-    desc: 'Isolated Ephemeral Grid Runners',
-    offsetY: 14,
-  },
-  {
     name: 'REST Assured',
     category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #818cf8 0%, #3730a3 100%)',
-    glowColor: 'rgba(129, 140, 248, 0.75)',
-    iconType: 'api',
+    bgGradient: 'linear-gradient(145deg, #4F46E5 0%, #2A247A 100%)',
+    glowColor: 'rgba(79, 70, 229, 0.85)',
+    iconSrc: '/icons/rest-assured.svg',
     desc: 'JSON Schema & Contract Assertions',
-    offsetY: -24,
+    offsetY: -22,
   },
   {
-    name: 'Postman',
+    name: 'Python',
     category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #ff6c37 0%, #9a2c06 100%)',
-    glowColor: 'rgba(255, 108, 55, 0.8)',
-    iconType: 'postman',
-    desc: 'Automated Newman Smoke Packs',
-    offsetY: 32,
-  },
-  {
-    name: 'Claude QA',
-    category: 'AI Stack',
-    bgGradient: 'linear-gradient(145deg, #d97706 0%, #78350f 100%)',
-    glowColor: 'rgba(217, 119, 6, 0.8)',
-    iconType: 'claude',
-    desc: 'LLM Log Triage & Root Cause Analysis',
-    offsetY: -44,
+    bgGradient: 'linear-gradient(145deg, #1E293B 0%, #0F172A 100%)',
+    glowColor: 'rgba(245, 158, 11, 0.8)',
+    iconSrc: '/icons/python.svg',
+    desc: 'PyTest Automation & Data Pipelines',
+    offsetY: 26,
   },
   {
     name: 'Appium',
     category: 'QA Stack',
-    bgGradient: 'linear-gradient(145deg, #ec4899 0%, #9d174d 100%)',
-    glowColor: 'rgba(236, 72, 153, 0.75)',
-    iconType: 'appium',
+    bgGradient: 'linear-gradient(145deg, #662D91 0%, #3B0E5E 100%)',
+    glowColor: 'rgba(236, 72, 153, 0.8)',
+    iconSrc: '/icons/appium.svg',
     desc: 'iOS & Android Native Mobile Tests',
-    offsetY: 8,
+    offsetY: 6,
   },
 ]
 
 const totalTiles = techTiles.length
 // Radius of the 3D orbit cylinder (px)
-const radius = 235
+const radius = 255
 </script>
 
 <template>
-  <div class="tech-hand-stage" role="img" aria-label="Photorealistic 3D hand encircled by orbiting QA and AI technology tiles">
+  <div class="tech-hand-stage" role="img" aria-label="Photorealistic 3D hand encircled by orbiting official QA and AI technology tiles">
     <!-- Studio Ambient Vignette & Velvet Drapery Background -->
     <div class="studio-backdrop" aria-hidden="true">
       <div class="velvet-folds"></div>
@@ -249,104 +249,15 @@ const radius = 235
             <!-- Glossy Glass Reflection Top Half -->
             <div class="squircle-gloss"></div>
 
-            <!-- Crisp Vector Tech Logo -->
+            <!-- OFFICIAL VECTOR LOGO (Bold, High Contrast & Highly Visible) -->
             <div class="tile-icon-wrap">
-              <!-- PLAYWRIGHT -->
-              <svg v-if="tile.iconType === 'playwright'" viewBox="0 0 40 40" width="32" height="32">
-                <path d="M12 28 C9 24 9 16 14 12 C19 8 26 10 28 14 C30 18 29 25 24 28 Z" fill="#FF6B6B" />
-                <path d="M22 30 C19 28 17 21 21 16 C25 12 31 13 33 17 C35 21 34 27 29 30 Z" fill="#2EAD33" />
-                <circle cx="16" cy="18" r="2.5" fill="#FFF" />
-                <circle cx="27" cy="20" r="2.5" fill="#FFF" />
-              </svg>
-
-              <!-- TYPESCRIPT -->
-              <svg v-else-if="tile.iconType === 'typescript'" viewBox="0 0 40 40" width="32" height="32">
-                <text x="20" y="27" font-family="'JetBrains Mono', system-ui, sans-serif" font-size="20" font-weight="900" fill="#FFF" text-anchor="middle" letter-spacing="-1">TS</text>
-              </svg>
-
-              <!-- JAVA -->
-              <svg v-else-if="tile.iconType === 'java'" viewBox="0 0 40 40" width="32" height="32">
-                <path d="M11 21 C11 28 15 32 22 32 C28 32 31 28 31 21 Z" fill="#FFF" />
-                <path d="M29 23 C33 23 35 24 35 26 C35 28 33 29 29 29" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" fill="none" />
-                <path d="M16 16 Q19 13 17 9" stroke="#FFF" stroke-width="2.2" stroke-linecap="round" fill="none" />
-                <path d="M22 16 Q25 13 23 9" stroke="#FFF" stroke-width="2.2" stroke-linecap="round" fill="none" />
-                <path d="M8 34 H34" stroke="#FFF" stroke-width="2" stroke-linecap="round" />
-              </svg>
-
-              <!-- SELENIUM -->
-              <svg v-else-if="tile.iconType === 'selenium'" viewBox="0 0 40 40" width="32" height="32">
-                <text x="20" y="27" font-family="'JetBrains Mono', system-ui, sans-serif" font-size="20" font-weight="900" fill="#FFF" text-anchor="middle" letter-spacing="-0.5">Se</text>
-              </svg>
-
-              <!-- TESTNG -->
-              <svg v-else-if="tile.iconType === 'testng'" viewBox="0 0 40 40" width="32" height="32">
-                <text x="20" y="27" font-family="'JetBrains Mono', system-ui, sans-serif" font-size="18" font-weight="900" fill="#FFF" text-anchor="middle">TG</text>
-              </svg>
-
-              <!-- MCPS (Model Context Protocol) -->
-              <svg v-else-if="tile.iconType === 'mcp'" viewBox="0 0 40 40" width="32" height="32">
-                <circle cx="12" cy="13" r="3.5" fill="#FFF" />
-                <circle cx="28" cy="13" r="3.5" fill="#FFF" />
-                <circle cx="20" cy="28" r="4.2" fill="#FFF" />
-                <line x1="12" y1="13" x2="20" y2="28" stroke="#FFF" stroke-width="2.5" />
-                <line x1="28" y1="13" x2="20" y2="28" stroke="#FFF" stroke-width="2.5" />
-                <line x1="12" y1="13" x2="28" y2="13" stroke="#FFF" stroke-width="2" stroke-dasharray="2 2" />
-              </svg>
-
-              <!-- AI SELF-HEALING -->
-              <svg v-else-if="tile.iconType === 'ai'" viewBox="0 0 40 40" width="32" height="32">
-                <path d="M20 6 L23.5 16.5 L34 20 L23.5 23.5 L20 34 L16.5 23.5 L6 20 L16.5 16.5 Z" fill="#FFF" />
-                <circle cx="30" cy="10" r="2.5" fill="#FFF" />
-                <circle cx="10" cy="30" r="2" fill="#FFF" />
-              </svg>
-
-              <!-- JENKINS -->
-              <svg v-else-if="tile.iconType === 'jenkins'" viewBox="0 0 40 40" width="32" height="32">
-                <circle cx="20" cy="18" r="10" fill="#FFE2D1" />
-                <path d="M12 12 Q20 8 28 12 L27 8 Q20 5 13 8 Z" fill="#222" />
-                <circle cx="17" cy="17" r="1.5" fill="#222" />
-                <circle cx="23" cy="17" r="1.5" fill="#222" />
-                <path d="M18 21 Q20 23 22 21" stroke="#222" stroke-width="1.5" fill="none" />
-                <polygon points="16 28 24 28 20 25" fill="#D33833" />
-              </svg>
-
-              <!-- GITHUB ACTIONS -->
-              <svg v-else-if="tile.iconType === 'github'" viewBox="0 0 40 40" width="32" height="32">
-                <path fill="#FFF" fill-rule="evenodd" d="M20 7 C12.8 7 7 12.8 7 20 C7 25.7 10.7 30.6 15.9 32.3 C16.5 32.4 16.8 32 16.8 31.7 C16.8 31.4 16.8 30.4 16.8 29.2 C13.2 30 12.4 27.5 12.4 27.5 C11.9 26 11 25.6 11 25.6 C9.8 24.8 11.1 24.8 11.1 24.8 C12.4 24.9 13.1 26.2 13.1 26.2 C14.3 28.3 16.3 27.6 17 27.3 C17.1 26.4 17.5 25.8 17.9 25.4 C15 25.1 12 24 12 18.9 C12 17.5 12.5 16.3 13.3 15.3 C13.2 15 12.7 13.6 13.4 11.8 C13.4 11.8 14.5 11.5 17 13.1 C18 12.8 19.1 12.7 20.1 12.7 C21.1 12.7 22.2 12.8 23.2 13.1 C25.7 11.5 26.8 11.8 26.8 11.8 C27.5 13.6 27 15 26.9 15.3 C27.7 16.3 28.2 17.5 28.2 18.9 C28.2 24 25.2 25.1 22.3 25.4 C22.8 25.8 23.2 26.6 23.2 27.9 C23.2 29.6 23.2 31.1 23.2 31.5 C23.2 31.9 23.5 32.4 24.1 32.3 C29.3 30.6 33 25.7 33 20 C33 12.8 27.2 7 20 7 Z" />
-              </svg>
-
-              <!-- DOCKER -->
-              <svg v-else-if="tile.iconType === 'docker'" viewBox="0 0 40 40" width="32" height="32">
-                <path d="M9 24 C9 23 11 21 17 21 C19 18 24 18 26 22 C31 22 34 25 34 27 C34 30 29 32 22 32 C13 32 9 29 9 24 Z" fill="#FFF" />
-                <rect x="14" y="16" width="3" height="3" rx="0.5" fill="#FFF" />
-                <rect x="18" y="16" width="3" height="3" rx="0.5" fill="#FFF" />
-                <rect x="22" y="16" width="3" height="3" rx="0.5" fill="#FFF" />
-                <rect x="18" y="12" width="3" height="3" rx="0.5" fill="#FFF" />
-                <circle cx="30" cy="24" r="1" fill="#0ea5e9" />
-              </svg>
-
-              <!-- REST ASSURED (API) -->
-              <svg v-else-if="tile.iconType === 'api'" viewBox="0 0 40 40" width="32" height="32">
-                <path d="M21 8 L12 22 L19 22 L17 32 L28 18 L21 18 Z" fill="#FFF" />
-              </svg>
-
-              <!-- POSTMAN -->
-              <svg v-else-if="tile.iconType === 'postman'" viewBox="0 0 40 40" width="32" height="32">
-                <circle cx="20" cy="20" r="10" fill="#FFF" />
-                <path d="M15 20 L23 15 L21 25 Z" fill="#FF6C37" />
-              </svg>
-
-              <!-- CLAUDE QA -->
-              <svg v-else-if="tile.iconType === 'claude'" viewBox="0 0 40 40" width="32" height="32">
-                <path d="M20 9 L22 17 L30 15 L24 21 L30 27 L22 25 L20 33 L18 25 L10 27 L16 21 L10 15 L18 17 Z" fill="#FFF" />
-              </svg>
-
-              <!-- APPIUM -->
-              <svg v-else-if="tile.iconType === 'appium'" viewBox="0 0 40 40" width="32" height="32">
-                <rect x="13" y="9" width="14" height="22" rx="3" fill="#FFF" />
-                <rect x="15" y="12" width="10" height="14" rx="1" fill="#ec4899" />
-                <circle cx="20" cy="28.5" r="1" fill="#ec4899" />
-              </svg>
+              <img
+                :src="tile.iconSrc"
+                :alt="tile.name"
+                class="official-logo-img"
+                loading="eager"
+                decoding="async"
+              />
             </div>
           </div>
         </div>
@@ -369,8 +280,8 @@ const radius = 235
 .tech-hand-stage {
   position: relative;
   width: 100%;
-  max-width: 580px;
-  height: 540px;
+  max-width: 600px;
+  height: 550px;
   perspective: 1200px;
   display: flex;
   align-items: center;
@@ -412,12 +323,12 @@ const radius = 235
   position: absolute;
   top: 15%;
   left: 50%;
-  width: 380px;
-  height: 380px;
-  margin-left: -190px;
+  width: 400px;
+  height: 400px;
+  margin-left: -200px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(147, 51, 234, 0.45) 0%, rgba(91, 33, 182, 0.25) 45%, transparent 75%);
-  filter: blur(40px);
+  filter: blur(45px);
 }
 
 /* Studio Typography matching the reference image layout */
@@ -528,11 +439,11 @@ const radius = 235
 /* Ambient Back Glow & Guides */
 .orbit-glow {
   position: absolute;
-  width: 360px;
-  height: 360px;
+  width: 380px;
+  height: 380px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(56, 189, 248, 0.15) 50%, transparent 75%);
-  filter: blur(50px);
+  filter: blur(55px);
   pointer-events: none;
   transform: translateZ(-60px);
 }
@@ -544,15 +455,15 @@ const radius = 235
 }
 
 .guide-outer {
-  width: 480px;
-  height: 220px;
+  width: 520px;
+  height: 240px;
   border: 1px dashed rgba(167, 139, 250, 0.25);
   transform: rotateX(72deg) translateZ(-15px);
 }
 
 .guide-inner {
-  width: 500px;
-  height: 240px;
+  width: 540px;
+  height: 260px;
   border: 1px solid rgba(56, 189, 248, 0.18);
   transform: rotateX(72deg) translateZ(15px);
 }
@@ -563,8 +474,8 @@ const radius = 235
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%) translateZ(0px);
-  width: 250px;
-  height: 460px;
+  width: 260px;
+  height: 470px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -588,9 +499,9 @@ const radius = 235
 .hand-render-img {
   width: 100%;
   height: auto;
-  max-height: 460px;
+  max-height: 470px;
   object-fit: contain;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(147, 51, 234, 0.45));
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(147, 51, 234, 0.45));
 }
 
 .hand-rim-glow {
@@ -650,7 +561,7 @@ const radius = 235
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  animation: orbit-cyl 28s linear infinite;
+  animation: orbit-cyl 30s linear infinite;
 }
 
 .orbit-carousel.paused {
@@ -668,54 +579,54 @@ const radius = 235
 
 .tile-slot {
   position: absolute;
-  top: -32px;
-  left: -32px;
-  width: 64px;
-  height: 64px;
+  top: -36px;
+  left: -36px;
+  width: 72px;
+  height: 72px;
   transform-style: preserve-3d;
 }
 
-/* 3D Squircle App Tile (Exact Apple iOS/macOS 3D App Icon style from reference) */
+/* 3D Squircle App Tile (Large, Chunky, High-Visibility) */
 .app-squircle {
   position: relative;
-  width: 62px;
-  height: 62px;
-  border-radius: 19px;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s ease, box-shadow 0.28s ease;
   transform-style: preserve-3d;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   box-shadow:
-    0 2px 0 rgba(255, 255, 255, 0.5) inset,
-    0 -3px 0 rgba(0, 0, 0, 0.35) inset,
-    0 6px 14px rgba(0, 0, 0, 0.6),
-    0 16px 30px -4px var(--tile-glow);
+    0 2px 0 rgba(255, 255, 255, 0.6) inset,
+    0 -3px 0 rgba(0, 0, 0, 0.4) inset,
+    0 8px 18px rgba(0, 0, 0, 0.65),
+    0 18px 36px -4px var(--tile-glow);
 }
 
 /* 3D Extruded Bevel behind the front tile */
 .squircle-bevel {
   position: absolute;
   inset: -1px;
-  border-radius: 20px;
+  border-radius: 23px;
   background: inherit;
   filter: brightness(0.65) saturate(1.3);
-  transform: translateZ(-9px);
+  transform: translateZ(-10px);
   pointer-events: none;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.8);
 }
 
 .tile-slot:hover .app-squircle {
-  transform: scale(1.25) translateZ(40px);
-  filter: brightness(1.22);
+  transform: scale(1.28) translateZ(45px);
+  filter: brightness(1.25);
   border-color: rgba(255, 255, 255, 0.95);
   box-shadow:
     0 2px 0 #fff inset,
     0 -3px 0 rgba(0, 0, 0, 0.4) inset,
-    0 12px 28px rgba(0, 0, 0, 0.8),
-    0 22px 42px 2px var(--tile-glow);
+    0 14px 32px rgba(0, 0, 0, 0.85),
+    0 24px 48px 2px var(--tile-glow);
 }
 
 /* Glossy glass reflection curve across top half */
@@ -727,11 +638,11 @@ const radius = 235
   height: 48%;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.65) 0%,
-    rgba(255, 255, 255, 0.2) 65%,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.15) 65%,
     rgba(255, 255, 255, 0) 100%
   );
-  border-radius: 18px 18px 30% 30% / 18px 18px 15% 15%;
+  border-radius: 21px 21px 30% 30% / 21px 21px 15% 15%;
   pointer-events: none;
   z-index: 3;
 }
@@ -739,10 +650,24 @@ const radius = 235
 .tile-icon-wrap {
   position: relative;
   z-index: 2;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.55));
+}
+
+.official-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s ease;
+}
+
+.tile-slot:hover .official-logo-img {
+  transform: scale(1.12);
 }
 
 /* Floating interactive Tooltip */
@@ -804,7 +729,7 @@ const radius = 235
 
 @media (max-width: 600px) {
   .tech-hand-stage {
-    height: 440px;
+    height: 450px;
     transform: scale(0.85);
   }
   .callout-desc {
