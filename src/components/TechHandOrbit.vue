@@ -11,8 +11,8 @@ const isPaused = ref(false)
 
 // Gentle 3D perspective tilt reacting to mouse position
 const tiltStyle = computed(() => {
-  const x = (props.mx || 0) * 14
-  const y = -(props.my || 0) * 10
+  const x = (props.mx || 0) * 12
+  const y = -(props.my || 0) * 8
   return {
     transform: `rotateY(${x.toFixed(1)}deg) rotateX(${y.toFixed(1)}deg)`,
   }
@@ -36,7 +36,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(46, 173, 51, 0.85)',
     iconSrc: '/icons/playwright.svg',
     desc: 'High-speed E2E & Component Testing',
-    offsetY: -24,
+    offsetY: -20,
   },
   {
     name: 'TypeScript',
@@ -45,7 +45,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(49, 120, 198, 0.85)',
     iconSrc: '/icons/typescript.svg',
     desc: 'Strict Typed Page Object Models',
-    offsetY: 20,
+    offsetY: 22,
   },
   {
     name: 'Java',
@@ -54,7 +54,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(234, 45, 46, 0.8)',
     iconSrc: '/icons/java.svg',
     desc: 'Enterprise Automation & Multi-Threading',
-    offsetY: -36,
+    offsetY: -32,
   },
   {
     name: 'Selenium',
@@ -72,7 +72,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(211, 56, 51, 0.85)',
     iconSrc: '/icons/jenkins.svg',
     desc: 'Declarative CI/CD Pipelines & Webhooks',
-    offsetY: -28,
+    offsetY: -26,
   },
   {
     name: 'Docker',
@@ -81,7 +81,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(36, 150, 237, 0.85)',
     iconSrc: '/icons/docker.svg',
     desc: 'Isolated Ephemeral Grid Runners',
-    offsetY: 16,
+    offsetY: 18,
   },
   {
     name: 'Postman',
@@ -90,7 +90,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(255, 108, 55, 0.85)',
     iconSrc: '/icons/postman.svg',
     desc: 'Automated Newman Smoke Packs',
-    offsetY: 34,
+    offsetY: 30,
   },
   {
     name: 'GitHub',
@@ -99,7 +99,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(192, 132, 252, 0.75)',
     iconSrc: '/icons/github.svg',
     desc: '4x Sharded Matrix Runners',
-    offsetY: -16,
+    offsetY: -14,
   },
   {
     name: 'TestNG',
@@ -108,7 +108,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(229, 83, 34, 0.85)',
     iconSrc: '/icons/testng.svg',
     desc: 'Parallel Suites & DataProviders',
-    offsetY: -32,
+    offsetY: -30,
   },
   {
     name: 'MCPs',
@@ -117,7 +117,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(139, 92, 246, 0.9)',
     iconSrc: '/icons/mcp.svg',
     desc: 'Model Context Protocol Agents',
-    offsetY: 10,
+    offsetY: 12,
   },
   {
     name: 'AI Self-Healing',
@@ -126,7 +126,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(56, 189, 248, 0.85)',
     iconSrc: '/icons/ai-healing.svg',
     desc: 'Neural DOM Self-Healing Locators',
-    offsetY: -48,
+    offsetY: -42,
   },
   {
     name: 'REST Assured',
@@ -135,7 +135,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(79, 70, 229, 0.85)',
     iconSrc: '/icons/rest-assured.svg',
     desc: 'JSON Schema & Contract Assertions',
-    offsetY: -22,
+    offsetY: -20,
   },
   {
     name: 'Python',
@@ -153,13 +153,12 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(236, 72, 153, 0.8)',
     iconSrc: '/icons/appium.svg',
     desc: 'iOS & Android Native Mobile Tests',
-    offsetY: 6,
+    offsetY: 8,
   },
 ]
 
 const totalTiles = techTiles.length
-// Radius of the 3D orbit cylinder (px)
-const radius = 255
+const animDuration = 28 // seconds per full 360 rotation
 </script>
 
 <template>
@@ -195,7 +194,7 @@ const radius = 255
       <div class="orbit-ring-guide guide-outer" aria-hidden="true"></div>
       <div class="orbit-ring-guide guide-inner" aria-hidden="true"></div>
 
-      <!-- PHOTOREALISTIC 3D SCULPTED HAND (Center of 3D Scene) -->
+      <!-- PHOTOREALISTIC 3D SCULPTED HAND (Pristine transparent asset - Zero bounding box) -->
       <div class="hand-3d-anchor" aria-hidden="true">
         <picture class="hand-picture">
           <source srcset="/images/hand-3d.webp" type="image/webp" />
@@ -208,48 +207,42 @@ const radius = 255
           />
         </picture>
 
-        <!-- Dynamic Ambient Violet Rim Light Overlays -->
-        <div class="hand-rim-glow" aria-hidden="true"></div>
-
         <!-- "Ideas ignite" AI Energy Spark at Fingertip (from Reference 2) -->
         <div class="fingertip-spark" aria-hidden="true">
           <div class="spark-core"></div>
+          <div class="spark-flare-h"></div>
+          <div class="spark-flare-v"></div>
           <div class="spark-ring ring-1"></div>
           <div class="spark-ring ring-2"></div>
         </div>
       </div>
 
-      <!-- 3D ORBITING RING OF SQUIRCLES (CYLINDER ENCIRCLING THE HAND) -->
-      <div
-        class="orbit-carousel"
-        :class="{ paused: isPaused }"
-        aria-hidden="true"
-      >
+      <!-- 3D ORBIT BELT (BILLBOARDED: TILES ALWAYS FACE VIEWER - NEVER TURN SIDEWAYS) -->
+      <div class="orbit-stage" aria-hidden="true">
         <div
           v-for="(tile, i) in techTiles"
           :key="tile.name"
-          class="tile-slot"
+          class="tile-orbit-track"
+          :class="{ paused: isPaused }"
           :style="{
-            transform: `rotateY(${(360 / totalTiles) * i}deg) translateZ(${radius}px) translateY(${tile.offsetY}px) rotateY(${-(360 / totalTiles) * i}deg)`
+            animationDelay: `-${(animDuration / totalTiles) * i}s`,
+            '--tile-offset-y': `${tile.offsetY}px`
           }"
-          @mouseenter="hoveredTool = tile.name; isPaused = true"
-          @mouseleave="hoveredTool = null; isPaused = false"
         >
-          <!-- 3D Chunky Squircle Tile with Beveled Extrusion & Specular Gloss -->
+          <!-- 3D Chunky Squircle Tile (Always Facing Forward, Crisp & Bold) -->
           <div
             class="app-squircle"
             :style="{
               background: tile.bgGradient,
               '--tile-glow': tile.glowColor,
             }"
+            @mouseenter="hoveredTool = tile.name; isPaused = true"
+            @mouseleave="hoveredTool = null; isPaused = false"
           >
-            <!-- 3D Beveled Side Wall (Extrusion depth) -->
-            <div class="squircle-bevel"></div>
-
             <!-- Glossy Glass Reflection Top Half -->
             <div class="squircle-gloss"></div>
 
-            <!-- OFFICIAL VECTOR LOGO (Bold, High Contrast & Highly Visible) -->
+            <!-- OFFICIAL VECTOR LOGO (Bold, High Contrast & 100% Clearly Visible) -->
             <div class="tile-icon-wrap">
               <img
                 :src="tile.iconSrc"
@@ -281,7 +274,7 @@ const radius = 255
   position: relative;
   width: 100%;
   max-width: 600px;
-  height: 550px;
+  height: 560px;
   perspective: 1200px;
   display: flex;
   align-items: center;
@@ -458,24 +451,24 @@ const radius = 255
   width: 520px;
   height: 240px;
   border: 1px dashed rgba(167, 139, 250, 0.25);
-  transform: rotateX(72deg) translateZ(-15px);
+  transform: rotateX(74deg) translateZ(-15px);
 }
 
 .guide-inner {
   width: 540px;
   height: 260px;
   border: 1px solid rgba(56, 189, 248, 0.18);
-  transform: rotateX(72deg) translateZ(15px);
+  transform: rotateX(74deg) translateZ(15px);
 }
 
-/* PHOTOREALISTIC 3D HAND ANCHOR */
+/* PHOTOREALISTIC 3D HAND ANCHOR (Depth Z=0 in the 3D scene) */
 .hand-3d-anchor {
   position: absolute;
-  bottom: -10px;
+  bottom: 0px;
   left: 50%;
   transform: translateX(-50%) translateZ(0px);
-  width: 260px;
-  height: 470px;
+  width: 250px;
+  height: 440px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -499,134 +492,139 @@ const radius = 255
 .hand-render-img {
   width: 100%;
   height: auto;
-  max-height: 470px;
+  max-height: 440px;
   object-fit: contain;
-  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(147, 51, 234, 0.45));
-}
-
-.hand-rim-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 30%, rgba(168, 85, 247, 0.25) 0%, transparent 60%);
-  mix-blend-mode: screen;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(147, 51, 234, 0.45));
 }
 
 /* Fingertip "Ideas ignite" Energy Spark (Ref 2 Inspiration) */
 .fingertip-spark {
   position: absolute;
-  top: 15px;
-  left: 50%;
+  top: 40px;
+  left: 48%;
   transform: translateX(-50%);
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   pointer-events: none;
 }
 
 .spark-core {
   position: absolute;
-  inset: 6px;
+  inset: 7px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 0 18px 4px #a855f7, 0 0 35px 8px #38bdf8;
+  box-shadow: 0 0 16px 4px #fff, 0 0 30px 8px #a855f7, 0 0 50px 12px #38bdf8;
   animation: spark-pulse 1.8s infinite ease-in-out;
+}
+
+.spark-flare-h {
+  position: absolute;
+  top: 13px;
+  left: -15px;
+  width: 58px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fff 50%, transparent);
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.spark-flare-v {
+  position: absolute;
+  top: -15px;
+  left: 13px;
+  width: 2px;
+  height: 58px;
+  background: linear-gradient(180deg, transparent, #fff 50%, transparent);
+  box-shadow: 0 0 8px #a855f7;
 }
 
 .spark-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid rgba(168, 85, 247, 0.7);
+  border: 1px solid rgba(168, 85, 247, 0.8);
   animation: spark-ripple 2.4s infinite ease-out;
 }
 
 .ring-2 {
   animation-delay: 1.2s;
-  border-color: rgba(56, 189, 248, 0.6);
+  border-color: rgba(56, 189, 248, 0.7);
 }
 
 @keyframes spark-pulse {
-  0%, 100% { transform: scale(0.85); opacity: 0.9; }
-  50% { transform: scale(1.3); opacity: 1; }
+  0%, 100% { transform: scale(0.9); opacity: 0.9; }
+  50% { transform: scale(1.35); opacity: 1; }
 }
 
 @keyframes spark-ripple {
-  0% { transform: scale(0.5); opacity: 1; }
-  100% { transform: scale(2.6); opacity: 0; }
+  0% { transform: scale(0.4); opacity: 1; }
+  100% { transform: scale(2.8); opacity: 0; }
 }
 
-/* 3D Orbiting Ring Carousel */
-.orbit-carousel {
+/* 3D ORBIT STAGE (Tilted Elliptical Ring) */
+.orbit-stage {
   position: absolute;
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  animation: orbit-cyl 30s linear infinite;
+  transform: rotateX(16deg);
 }
 
-.orbit-carousel.paused {
+/* BILLBOARDED ORBIT TRACK:
+   Tile moves around the circle, but COUNTER-ROTATES so it ALWAYS FACES FORWARD!
+   Zero paper-thin edge-on artifacts! Full logo is visible at all angles! */
+.tile-orbit-track {
+  position: absolute;
+  top: -34px;
+  left: -34px;
+  width: 68px;
+  height: 68px;
+  transform-style: preserve-3d;
+  animation: billboard-orbit 28s linear infinite;
+  pointer-events: auto;
+}
+
+.tile-orbit-track.paused {
   animation-play-state: paused;
 }
 
-@keyframes orbit-cyl {
-  from {
-    transform: rotateX(14deg) rotateY(0deg);
+@keyframes billboard-orbit {
+  0% {
+    transform: rotateY(0deg) translateZ(240px) translateY(var(--tile-offset-y, 0px)) rotateY(0deg);
   }
-  to {
-    transform: rotateX(14deg) rotateY(360deg);
+  100% {
+    transform: rotateY(360deg) translateZ(240px) translateY(var(--tile-offset-y, 0px)) rotateY(-360deg);
   }
 }
 
-.tile-slot {
-  position: absolute;
-  top: -36px;
-  left: -36px;
-  width: 72px;
-  height: 72px;
-  transform-style: preserve-3d;
-}
-
-/* 3D Squircle App Tile (Large, Chunky, High-Visibility) */
+/* 3D Squircle App Tile (Chunky, Bold, High-Visibility) */
 .app-squircle {
   position: relative;
-  width: 72px;
-  height: 72px;
-  border-radius: 22px;
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s ease, box-shadow 0.28s ease;
   transform-style: preserve-3d;
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   box-shadow:
     0 2px 0 rgba(255, 255, 255, 0.6) inset,
-    0 -3px 0 rgba(0, 0, 0, 0.4) inset,
-    0 8px 18px rgba(0, 0, 0, 0.65),
-    0 18px 36px -4px var(--tile-glow);
+    0 -3px 0 rgba(0, 0, 0, 0.35) inset,
+    0 8px 20px rgba(0, 0, 0, 0.65),
+    0 16px 32px var(--tile-glow);
 }
 
-/* 3D Extruded Bevel behind the front tile */
-.squircle-bevel {
-  position: absolute;
-  inset: -1px;
-  border-radius: 23px;
-  background: inherit;
-  filter: brightness(0.65) saturate(1.3);
-  transform: translateZ(-10px);
-  pointer-events: none;
-  box-shadow: 0 0 14px rgba(0, 0, 0, 0.8);
-}
-
-.tile-slot:hover .app-squircle {
-  transform: scale(1.28) translateZ(45px);
-  filter: brightness(1.25);
+.tile-orbit-track:hover .app-squircle {
+  transform: scale(1.25) translateZ(35px);
+  filter: brightness(1.22);
   border-color: rgba(255, 255, 255, 0.95);
   box-shadow:
     0 2px 0 #fff inset,
     0 -3px 0 rgba(0, 0, 0, 0.4) inset,
-    0 14px 32px rgba(0, 0, 0, 0.85),
-    0 24px 48px 2px var(--tile-glow);
+    0 14px 30px rgba(0, 0, 0, 0.85),
+    0 22px 45px 2px var(--tile-glow);
 }
 
 /* Glossy glass reflection curve across top half */
@@ -639,10 +637,10 @@ const radius = 255
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.15) 65%,
+    rgba(255, 255, 255, 0.12) 65%,
     rgba(255, 255, 255, 0) 100%
   );
-  border-radius: 21px 21px 30% 30% / 21px 21px 15% 15%;
+  border-radius: 19px 19px 30% 30% / 19px 19px 15% 15%;
   pointer-events: none;
   z-index: 3;
 }
@@ -650,24 +648,24 @@ const radius = 255
 .tile-icon-wrap {
   position: relative;
   z-index: 2;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .official-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
   transition: transform 0.25s ease;
 }
 
-.tile-slot:hover .official-logo-img {
-  transform: scale(1.12);
+.tile-orbit-track:hover .official-logo-img {
+  transform: scale(1.1);
 }
 
 /* Floating interactive Tooltip */
