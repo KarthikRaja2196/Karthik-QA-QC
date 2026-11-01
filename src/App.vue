@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import NavBar from './components/NavBar.vue'
 import QaBot from './components/QaBot.vue'
 import TypedRoles from './components/TypedRoles.vue'
@@ -7,13 +7,21 @@ import TechMarquee from './components/TechMarquee.vue'
 import TestRunCard from './components/TestRunCard.vue'
 import SectionHead from './components/SectionHead.vue'
 import ContactSection from './components/ContactSection.vue'
+import CodeShowcase from './components/CodeShowcase.vue'
+import RoiCalculator from './components/RoiCalculator.vue'
+import AudioPlayer from './components/AudioPlayer.vue'
 import { useActiveSection } from './composables/useScrollState'
+import { useAudio } from './composables/useAudio'
 import {
-  navLinks, heroRoles, heroStats, techStack, skills, services, projects, process, profile,
+  navLinks, heroRoles, heroStats, techStack, skills, qualityGuarantees,
+  services, projects, experienceMilestones, process, profile,
 } from './data/content'
 
-// 'contact' is tracked too (it has no nav link) so "Process" un-highlights once you scroll past it.
+// Track active section for navbar highlighting
 const { activeId } = useActiveSection([...navLinks.map((l) => l.id), 'contact'])
+
+// Global Audio player state
+const { isPlaying, togglePlay, trackName } = useAudio()
 
 // Pointer position over the hero, normalised to -1…1, drives the robot's head and eyes.
 const look = ref({ x: 0, y: 0 })
@@ -30,12 +38,28 @@ function onLook(e: PointerEvent) {
 function onUnlook() {
   look.value = { x: 0, y: 0 }
 }
+
+// Interactive Skills Filter
+const selectedCategory = ref<'all' | 'e2e' | 'api' | 'cicd'>('all')
+const filteredSkills = computed(() => {
+  if (selectedCategory.value === 'all') return skills
+  return skills.filter((s) => s.category === selectedCategory.value || s.category === 'all')
+})
+
+// Mouse Spotlight dynamic position on cards
+function onCardMove(e: PointerEvent) {
+  const el = e.currentTarget as HTMLElement
+  const r = el.getBoundingClientRect()
+  el.style.setProperty('--mouse-x', `${e.clientX - r.left}px`)
+  el.style.setProperty('--mouse-y', `${e.clientY - r.top}px`)
+}
 </script>
 
 <template>
   <a href="#main" class="skip-link">Skip to content</a>
   <NavBar :active-id="activeId" />
 
+  <!-- HERO SECTION -->
   <header id="top" class="hero" @pointermove="onLook" @pointerleave="onUnlook">
     <div class="grid-bg" aria-hidden="true"></div>
     <div class="glow g1" aria-hidden="true"></div>
@@ -44,21 +68,46 @@ function onUnlook() {
 
     <div class="hero-grid">
       <div class="hero-copy">
-        <div class="rise d1 mono status-pill"><span class="pulse"></span> Available for freelance projects</div>
-        <h1 class="rise d2 h1">Test automation that <span class="hl">holds up</span> in production.</h1>
+        <div class="rise d1 status-row">
+          <div class="mono status-pill">
+            <span class="pulse"></span> Available for freelance projects
+          </div>
+          <!-- BGM quick control in hero -->
+          <button
+            type="button"
+            class="hero-music-pill mono"
+            :title="isPlaying ? 'Pause Honourable background track' : 'Play Honourable background track'"
+            @click="togglePlay"
+          >
+            <span class="speaker">{{ isPlaying ? '🔊' : '🎵' }}</span>
+            <span>BGM: <strong class="song-title">{{ trackName }}</strong></span>
+            <span class="music-action">[{{ isPlaying ? 'Pause' : 'Play' }}]</span>
+          </button>
+        </div>
+
+        <h1 class="rise d2 h1">
+          Test automation that <span class="hl">holds up</span> in production.
+        </h1>
+
         <p class="rise d3 mono specialising">
           <span class="sr-only">Specialising in {{ heroRoles.join(', ') }}</span>
-          <span aria-hidden="true"><span class="prompt">$</span> specialising in <TypedRoles :roles="heroRoles" /></span>
+          <span aria-hidden="true">
+            <span class="prompt">$</span> specialising in <TypedRoles :roles="heroRoles" />
+          </span>
         </p>
+
         <p class="rise d4 lead">
-          I'm {{ profile.name }} — a QA automation engineer. I design and build end-to-end and API test
+          I'm {{ profile.name }} — a QA automation engineer with 8+ years of experience. I design and build end-to-end and API test
           frameworks with TypeScript + Playwright and Java + Selenium/TestNG, wired into your CI/CD
-          pipeline, with clean architecture your team can maintain.
+          pipeline with zero flakiness.
         </p>
+
         <div class="rise d5 hero-actions">
           <a href="#contact" class="btn btn-p btn-lg">Start a project <span aria-hidden="true">→</span></a>
           <a href="#projects" class="btn btn-o btn-lg">View case studies</a>
+          <a href="#code" class="btn btn-o btn-lg">Inspect code</a>
         </div>
+
         <dl class="rise d5 hero-stats">
           <div v-for="s in heroStats" :key="s.label" class="stat">
             <dt>{{ s.label }}</dt>
@@ -69,7 +118,9 @@ function onUnlook() {
 
       <div class="rise d3 hero-visual">
         <QaBot :mx="look.x" :my="look.y" />
-        <div class="card-slot"><TestRunCard /></div>
+        <div class="card-slot">
+          <TestRunCard />
+        </div>
       </div>
     </div>
 
@@ -77,77 +128,185 @@ function onUnlook() {
   </header>
 
   <main id="main">
+    <!-- 01: SKILLS & TOOLBOX -->
     <section id="skills" class="sec container-1200">
       <SectionHead
-        num="01" label="toolbox" title="Core automation skills"
+        num="01"
+        label="toolbox"
+        title="Core automation skills"
         desc="A focused stack for shipping reliable automation — not chasing every new tool, but mastering the ones that hold up in production."
       />
+
+      <!-- Category Filter Pills -->
+      <div class="filter-bar mono">
+        <button
+          type="button"
+          class="filter-pill"
+          :class="{ active: selectedCategory === 'all' }"
+          @click="selectedCategory = 'all'"
+        >
+          All Domains ({{ skills.length }})
+        </button>
+        <button
+          type="button"
+          class="filter-pill"
+          :class="{ active: selectedCategory === 'e2e' }"
+          @click="selectedCategory = 'e2e'"
+        >
+          🎭 End-to-End & Web
+        </button>
+        <button
+          type="button"
+          class="filter-pill"
+          :class="{ active: selectedCategory === 'api' }"
+          @click="selectedCategory = 'api'"
+        >
+          ⚡ API & Contracts
+        </button>
+        <button
+          type="button"
+          class="filter-pill"
+          :class="{ active: selectedCategory === 'cicd' }"
+          @click="selectedCategory = 'cicd'"
+        >
+          🚀 CI/CD & DevOps
+        </button>
+      </div>
+
       <div class="skills-grid">
-        <article v-for="s in skills" :key="s.title" class="card reveal skill-card">
+        <article
+          v-for="s in filteredSkills"
+          :key="s.title"
+          class="card spotlight-card reveal skill-card"
+          @pointermove="onCardMove"
+        >
           <div class="chip-ic mono" aria-hidden="true">{{ s.icon }}</div>
           <h3>{{ s.title }}</h3>
           <p>{{ s.desc }}</p>
           <ul class="tags">
             <li v-for="t in s.tags" :key="t" class="mono">{{ t }}</li>
           </ul>
+          <div class="skill-level-badge mono">
+            <span class="dot"></span> {{ s.level }}
+          </div>
         </article>
       </div>
     </section>
 
-    <section id="services" class="band">
+    <!-- 02: CODE & FRAMEWORK ARCHITECTURE STANDARDS -->
+    <section id="code" class="band">
       <div class="sec container-1200">
-        <div class="two">
-          <SectionHead
-            class="sticky-head" num="02" label="services" title="What I can do for your team"
-            desc="Fixed-scope or ongoing engagements — from a first automation framework to stabilising an existing flaky suite."
-          />
-          <div class="service-list">
-            <article v-for="v in services" :key="v.num" class="card reveal service-card">
-              <div class="mono service-num">{{ v.num }}</div>
-              <div>
-                <h3>{{ v.title }}</h3>
-                <ul>
-                  <li v-for="it in v.items" :key="it"><span class="mono" aria-hidden="true">→</span>{{ it }}</li>
-                </ul>
+        <SectionHead
+          num="02"
+          label="engineering standards"
+          title="Clean, maintainable test architecture"
+          desc="Test suites shouldn't be fragile scripts. I build reusable Page Object Models, custom fixtures, thread-safe runners, and CI matrix workflows."
+        />
+        <CodeShowcase />
+      </div>
+    </section>
+
+    <!-- 03: SERVICES & QUALITY GUARANTEES -->
+    <section id="services" class="sec container-1200">
+      <div class="two">
+        <SectionHead
+          class="sticky-head"
+          num="03"
+          label="services"
+          title="What I can do for your team"
+          desc="Fixed-scope or ongoing engagements — from a first automation framework to stabilizing an existing flaky suite."
+        />
+        <div class="service-list">
+          <article
+            v-for="v in services"
+            :key="v.num"
+            class="card spotlight-card reveal service-card"
+            @pointermove="onCardMove"
+          >
+            <div class="mono service-num">{{ v.num }}</div>
+            <div>
+              <h3>{{ v.title }}</h3>
+              <ul>
+                <li v-for="it in v.items" :key="it">
+                  <span class="mono" aria-hidden="true">→</span>{{ it }}
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 4 Pillars of Quality Guarantees -->
+      <div class="guarantees-grid">
+        <article
+          v-for="g in qualityGuarantees"
+          :key="g.title"
+          class="card spotlight-card reveal guarantee-card"
+          @pointermove="onCardMove"
+        >
+          <div class="guarantee-icon" aria-hidden="true">{{ g.icon }}</div>
+          <h3>{{ g.title }}</h3>
+          <p>{{ g.desc }}</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 04: CASE STUDIES & PROJECTS -->
+    <section id="projects" class="band">
+      <div class="sec container-1200">
+        <SectionHead
+          num="04"
+          label="case studies"
+          title="Recent work & production results"
+          desc="Representative automation frameworks and metrics achieved for high-throughput applications."
+        />
+        <div class="project-list">
+          <article
+            v-for="(p, i) in projects"
+            :key="p.title"
+            class="card spotlight-card proj reveal"
+            @pointermove="onCardMove"
+          >
+            <div>
+              <div class="mono proj-meta">
+                <span>{{ String(i + 1).padStart(2, '0') }} · {{ p.role }}</span>
+                <span class="proj-arrow" aria-hidden="true">↗</span>
               </div>
-            </article>
-          </div>
+              <h3>{{ p.title }}</h3>
+              <p>{{ p.desc }}</p>
+              <ul class="tags">
+                <li v-for="st in p.stack" :key="st" class="mono">{{ st }}</li>
+              </ul>
+            </div>
+            <dl class="metrics">
+              <div v-for="m in p.metrics" :key="m.label">
+                <dt>{{ m.label }}</dt>
+                <dd>{{ m.value }}</dd>
+              </div>
+            </dl>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="sec container-1200">
+    <!-- 05: INTERACTIVE QA ROI ESTIMATOR -->
+    <section id="calculator" class="sec container-1200">
       <SectionHead
-        num="03" label="case studies" title="Recent work"
-        desc="Representative automation frameworks and results. Client names withheld — details available on request."
+        num="05"
+        label="business value"
+        title="Estimate your regression savings"
+        desc="See the tangible reduction in cycle time and engineering costs when automating manual regression."
       />
-      <div class="project-list">
-        <article v-for="(p, i) in projects" :key="p.title" class="card proj reveal">
-          <div>
-            <div class="mono proj-meta">
-              <span>{{ String(i + 1).padStart(2, '0') }} · {{ p.role }}</span>
-              <span class="proj-arrow" aria-hidden="true">↗</span>
-            </div>
-            <h3>{{ p.title }}</h3>
-            <p>{{ p.desc }}</p>
-            <ul class="tags">
-              <li v-for="st in p.stack" :key="st" class="mono">{{ st }}</li>
-            </ul>
-          </div>
-          <dl class="metrics">
-            <div v-for="m in p.metrics" :key="m.label">
-              <dt>{{ m.label }}</dt>
-              <dd>{{ m.value }}</dd>
-            </div>
-          </dl>
-        </article>
-      </div>
+      <RoiCalculator />
     </section>
 
+    <!-- 06: PROCESS & WORK HISTORY TIMELINE -->
     <section id="process" class="band">
       <div class="sec container-1200">
         <SectionHead
-          num="04" label="how we'll work" title="A simple, transparent process"
+          num="06"
+          label="how we'll work"
+          title="A simple, transparent process"
           desc="No surprises — you'll know the plan, the stack and the timeline before any code is written."
         />
         <div class="process-wrap">
@@ -160,16 +319,72 @@ function onUnlook() {
             </li>
           </ol>
         </div>
+
+        <!-- 8+ Years Experience Timeline -->
+        <div class="timeline-wrap">
+          <h3 class="mono tag" style="color: var(--accent-soft); font-size: 14px; margin-top: 40px;">
+            // CAREER TRACK RECORD & MILESTONES
+          </h3>
+          <article
+            v-for="m in experienceMilestones"
+            :key="m.period"
+            class="card spotlight-card reveal timeline-card"
+            @pointermove="onCardMove"
+          >
+            <div class="timeline-period mono">
+              <span>{{ m.period }}</span>
+              <span class="timeline-scope">{{ m.scope }}</span>
+            </div>
+            <div class="timeline-content">
+              <h3>{{ m.role }}</h3>
+              <p class="timeline-desc">{{ m.desc }}</p>
+              <ul class="timeline-highlights mono">
+                <li v-for="h in m.highlights" :key="h">
+                  <span>✓</span> {{ h }}
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
+    <!-- 07: CONTACT SECTION -->
     <ContactSection />
   </main>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="mono footer-inner">
-      <span>© {{ new Date().getFullYear() }} {{ profile.name }}</span>
-      <span>Built with Vue 3 · tested with Playwright</span>
+      <span>© {{ new Date().getFullYear() }} {{ profile.name }} · {{ profile.location }}</span>
+      <div class="footer-meta">
+        <span>BGM: {{ trackName }}</span>
+        <span>·</span>
+        <span>Built with Vue 3 & Vite · Tested with Playwright</span>
+      </div>
     </div>
   </footer>
+
+  <!-- FLOATING AUDIO PLAYER (HONOURABLE) -->
+  <AudioPlayer />
 </template>
+
+<style scoped>
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.music-action {
+  color: var(--accent-soft);
+  font-weight: 700;
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+</style>

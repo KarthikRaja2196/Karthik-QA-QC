@@ -330,3 +330,209 @@ ul, ol { list-style: none; }
   .rise, .reveal { opacity: 1; transform: none; }
   .hl::before, .track::after { transform: scaleX(1); }
 }
+
+
+/* ---------- Enhanced Additions: Custom Scrollbar, Guarantees, Timeline & Spotlight ---------- */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: #362562;
+  border-radius: 6px;
+  border: 2px solid var(--ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Card dynamic spotlight effect */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(167, 139, 250, 0.22),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 0;
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+.spotlight-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Filter pills */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+.filter-pill {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(28, 18, 54, 0.65);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-pill:hover {
+  border-color: rgba(167, 139, 250, 0.5);
+  color: #fff;
+  background: rgba(109, 40, 217, 0.2);
+}
+.filter-pill.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px -4px var(--accent);
+}
+
+.skill-level-badge {
+  font-size: 11px;
+  color: #a78bfa;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.skill-level-badge .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #34d399;
+}
+
+/* Quality Guarantees */
+.guarantees-grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+}
+.guarantee-card {
+  padding: 30px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.guarantee-icon {
+  font-size: 32px;
+}
+.guarantee-card h3 {
+  font-size: 20px;
+  color: #fff;
+}
+.guarantee-card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Timeline */
+.timeline-wrap {
+  margin-top: 56px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.timeline-card {
+  padding: 32px 36px;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+.timeline-period {
+  font-size: 13.5px;
+  color: var(--accent-soft);
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.timeline-scope {
+  font-size: 12px;
+  color: var(--muted);
+}
+.timeline-content h3 {
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+.timeline-desc {
+  margin-top: 10px;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.timeline-highlights {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.timeline-highlights li {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  color: #e2d9f7;
+}
+.timeline-highlights li span {
+  color: #34d399;
+}
+
+/* Hero music pill callout */
+.hero-music-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(109, 40, 217, 0.18);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  font-size: 12.5px;
+  color: #e2d9f7;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: fit-content;
+}
+.hero-music-pill:hover {
+  background: rgba(109, 40, 217, 0.35);
+  border-color: #a78bfa;
+  transform: translateY(-2px);
+}
+.hero-music-pill .speaker {
+  font-size: 14px;
+}
+.hero-music-pill .song-title {
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .timeline-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}
