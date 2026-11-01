@@ -35,8 +35,8 @@ export const heroStats = [
 ]
 
 export const techStack = [
-  'Playwright', 'Selenium WebDriver', 'TypeScript', 'Java', 'TestNG', 'AI Self-Healing',
-  'GitHub Actions', 'Jenkins', 'Docker', 'Rest Assured', 'Visual AI', 'Postman / Newman', 'LLM Test Synthesis', 'Allure Reports',
+  'Playwright', 'Selenium WebDriver', 'TypeScript', 'Java', 'TestNG', 'ChatGPT', 'Google Cloud', 'AI Self-Healing',
+  'GitHub Actions', 'Jenkins', 'Docker', 'Rest Assured', 'MCPs', 'Postman / Newman', 'LLM Test Synthesis', 'Allure Reports',
 ]
 
 export interface SkillItem {

@@ -10,9 +10,18 @@ const hoveredTool = ref<string | null>(null)
 const isPaused = ref(false)
 
 // Gentle 3D perspective tilt reacting to mouse position
-const tiltStyle = computed(() => {
-  const x = (props.mx || 0) * 12
-  const y = -(props.my || 0) * 8
+const stageTiltStyle = computed(() => {
+  const x = (props.mx || 0) * 10
+  const y = -(props.my || 0) * 7
+  return {
+    transform: `rotateY(${x.toFixed(1)}deg) rotateX(${y.toFixed(1)}deg)`,
+  }
+})
+
+// Dynamic hand reaction tracking cursor in 3D
+const handDynamicStyle = computed(() => {
+  const x = (props.mx || 0) * 8
+  const y = -(props.my || 0) * 5
   return {
     transform: `rotateY(${x.toFixed(1)}deg) rotateX(${y.toFixed(1)}deg)`,
   }
@@ -36,7 +45,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(46, 173, 51, 0.85)',
     iconSrc: '/icons/playwright.svg',
     desc: 'High-speed E2E & Component Testing',
-    offsetY: -20,
+    offsetY: -22,
   },
   {
     name: 'TypeScript',
@@ -45,7 +54,16 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(49, 120, 198, 0.85)',
     iconSrc: '/icons/typescript.svg',
     desc: 'Strict Typed Page Object Models',
-    offsetY: 22,
+    offsetY: 20,
+  },
+  {
+    name: 'ChatGPT',
+    category: 'AI Stack',
+    bgGradient: 'linear-gradient(145deg, #10A37F 0%, #075E48 100%)',
+    glowColor: 'rgba(16, 163, 127, 0.85)',
+    iconSrc: '/icons/chatgpt.svg',
+    desc: 'LLM Automated Test Synthesis & Root Cause Triage',
+    offsetY: -38,
   },
   {
     name: 'Java',
@@ -54,7 +72,16 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(234, 45, 46, 0.8)',
     iconSrc: '/icons/java.svg',
     desc: 'Enterprise Automation & Multi-Threading',
-    offsetY: -32,
+    offsetY: 14,
+  },
+  {
+    name: 'Google Cloud',
+    category: 'DevOps',
+    bgGradient: 'linear-gradient(145deg, #FFFFFF 0%, #E8EEF5 100%)',
+    glowColor: 'rgba(66, 133, 244, 0.85)',
+    iconSrc: '/icons/googlecloud.svg',
+    desc: 'GCP Scalable Test Matrix & BigQuery Analytics',
+    offsetY: -26,
   },
   {
     name: 'Selenium',
@@ -63,7 +90,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(67, 176, 42, 0.85)',
     iconSrc: '/icons/selenium.svg',
     desc: 'WebDriver 4 Cross-Browser Grid',
-    offsetY: 24,
+    offsetY: 22,
   },
   {
     name: 'Jenkins',
@@ -72,7 +99,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(211, 56, 51, 0.85)',
     iconSrc: '/icons/jenkins.svg',
     desc: 'Declarative CI/CD Pipelines & Webhooks',
-    offsetY: -26,
+    offsetY: -30,
   },
   {
     name: 'Docker',
@@ -81,7 +108,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(36, 150, 237, 0.85)',
     iconSrc: '/icons/docker.svg',
     desc: 'Isolated Ephemeral Grid Runners',
-    offsetY: 18,
+    offsetY: 16,
   },
   {
     name: 'Postman',
@@ -90,7 +117,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(255, 108, 55, 0.85)',
     iconSrc: '/icons/postman.svg',
     desc: 'Automated Newman Smoke Packs',
-    offsetY: 30,
+    offsetY: 32,
   },
   {
     name: 'GitHub',
@@ -99,7 +126,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(192, 132, 252, 0.75)',
     iconSrc: '/icons/github.svg',
     desc: '4x Sharded Matrix Runners',
-    offsetY: -14,
+    offsetY: -16,
   },
   {
     name: 'TestNG',
@@ -108,7 +135,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(229, 83, 34, 0.85)',
     iconSrc: '/icons/testng.svg',
     desc: 'Parallel Suites & DataProviders',
-    offsetY: -30,
+    offsetY: -32,
   },
   {
     name: 'MCPs',
@@ -116,8 +143,8 @@ const techTiles: TechTile[] = [
     bgGradient: 'linear-gradient(145deg, #8B5CF6 0%, #52199C 100%)',
     glowColor: 'rgba(139, 92, 246, 0.9)',
     iconSrc: '/icons/mcp.svg',
-    desc: 'Model Context Protocol Agents',
-    offsetY: 12,
+    desc: 'Model Context Protocol Autonomous Agents',
+    offsetY: 10,
   },
   {
     name: 'AI Self-Healing',
@@ -126,7 +153,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(56, 189, 248, 0.85)',
     iconSrc: '/icons/ai-healing.svg',
     desc: 'Neural DOM Self-Healing Locators',
-    offsetY: -42,
+    offsetY: -44,
   },
   {
     name: 'REST Assured',
@@ -135,7 +162,7 @@ const techTiles: TechTile[] = [
     glowColor: 'rgba(79, 70, 229, 0.85)',
     iconSrc: '/icons/rest-assured.svg',
     desc: 'JSON Schema & Contract Assertions',
-    offsetY: -20,
+    offsetY: -22,
   },
   {
     name: 'Python',
@@ -158,11 +185,11 @@ const techTiles: TechTile[] = [
 ]
 
 const totalTiles = techTiles.length
-const animDuration = 28 // seconds per full 360 rotation
+const animDuration = 32 // seconds per full rotation
 </script>
 
 <template>
-  <div class="tech-hand-stage" role="img" aria-label="Photorealistic 3D hand encircled by orbiting official QA and AI technology tiles">
+  <div class="tech-hand-stage" role="img" aria-label="Animated photorealistic 3D hand encircled by orbiting official QA and AI technology tiles">
     <!-- Studio Ambient Vignette & Velvet Drapery Background -->
     <div class="studio-backdrop" aria-hidden="true">
       <div class="velvet-folds"></div>
@@ -188,36 +215,39 @@ const animDuration = 28 // seconds per full 360 rotation
     </div>
 
     <!-- 3D Perspective Stage -->
-    <div class="stage-tilt" :style="tiltStyle">
+    <div class="stage-tilt" :style="stageTiltStyle">
       <!-- Deep 3D Ambient Space Rings -->
       <div class="orbit-glow" aria-hidden="true"></div>
       <div class="orbit-ring-guide guide-outer" aria-hidden="true"></div>
       <div class="orbit-ring-guide guide-inner" aria-hidden="true"></div>
 
-      <!-- PHOTOREALISTIC 3D SCULPTED HAND (Pristine transparent asset - Zero bounding box) -->
-      <div class="hand-3d-anchor" aria-hidden="true">
-        <picture class="hand-picture">
-          <source srcset="/images/hand-3d.webp" type="image/webp" />
-          <img
-            src="/images/hand-3d.png"
-            alt="3D Hand reaching upward"
-            class="hand-render-img"
-            loading="eager"
-            decoding="async"
-          />
-        </picture>
+      <!-- ANIMATED PHOTOREALISTIC 3D SCULPTED HAND -->
+      <!-- Smooth Organic Levitation + Mouse Tracking -->
+      <div class="hand-3d-anchor" :class="{ 'hand-hover-active': isPaused }" aria-hidden="true">
+        <div class="hand-anim-wrap" :style="handDynamicStyle">
+          <picture class="hand-picture">
+            <source srcset="/images/hand-3d.webp" type="image/webp" />
+            <img
+              src="/images/hand-3d.png"
+              alt="3D Hand reaching upward"
+              class="hand-render-img"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
 
-        <!-- "Ideas ignite" AI Energy Spark at Fingertip (from Reference 2) -->
-        <div class="fingertip-spark" aria-hidden="true">
-          <div class="spark-core"></div>
-          <div class="spark-flare-h"></div>
-          <div class="spark-flare-v"></div>
-          <div class="spark-ring ring-1"></div>
-          <div class="spark-ring ring-2"></div>
+          <!-- Fingertip "Ideas ignite" AI Energy Spark (Ref 2 Inspiration) -->
+          <div class="fingertip-spark" aria-hidden="true">
+            <div class="spark-core"></div>
+            <div class="spark-flare-h"></div>
+            <div class="spark-flare-v"></div>
+            <div class="spark-ring ring-1"></div>
+            <div class="spark-ring ring-2"></div>
+          </div>
         </div>
       </div>
 
-      <!-- 3D ORBIT BELT (BILLBOARDED: TILES ALWAYS FACE VIEWER - NEVER TURN SIDEWAYS) -->
+      <!-- 3D ORBIT TRACKS (TRANSLATE3D: TILES NEVER TURN BACKWARDS, LOGO ON BOTH SIDES) -->
       <div class="orbit-stage" aria-hidden="true">
         <div
           v-for="(tile, i) in techTiles"
@@ -229,7 +259,7 @@ const animDuration = 28 // seconds per full 360 rotation
             '--tile-offset-y': `${tile.offsetY}px`
           }"
         >
-          <!-- 3D Chunky Squircle Tile (Always Facing Forward, Crisp & Bold) -->
+          <!-- Double-Sided 3D Squircle Tile: Same Information on Both Sides -->
           <div
             class="app-squircle"
             :style="{
@@ -239,11 +269,22 @@ const animDuration = 28 // seconds per full 360 rotation
             @mouseenter="hoveredTool = tile.name; isPaused = true"
             @mouseleave="hoveredTool = null; isPaused = false"
           >
-            <!-- Glossy Glass Reflection Top Half -->
+            <!-- Glossy Glass Reflection Overlay -->
             <div class="squircle-gloss"></div>
 
-            <!-- OFFICIAL VECTOR LOGO (Bold, High Contrast & 100% Clearly Visible) -->
-            <div class="tile-icon-wrap">
+            <!-- Front Face with Official Logo -->
+            <div class="tile-face front-face">
+              <img
+                :src="tile.iconSrc"
+                :alt="tile.name"
+                class="official-logo-img"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+
+            <!-- Back Face with Identical Official Logo (Shows Same Information Both Sides) -->
+            <div class="tile-face back-face">
               <img
                 :src="tile.iconSrc"
                 :alt="tile.name"
@@ -448,20 +489,20 @@ const animDuration = 28 // seconds per full 360 rotation
 }
 
 .guide-outer {
-  width: 520px;
+  width: 530px;
   height: 240px;
   border: 1px dashed rgba(167, 139, 250, 0.25);
   transform: rotateX(74deg) translateZ(-15px);
 }
 
 .guide-inner {
-  width: 540px;
+  width: 550px;
   height: 260px;
   border: 1px solid rgba(56, 189, 248, 0.18);
   transform: rotateX(74deg) translateZ(15px);
 }
 
-/* PHOTOREALISTIC 3D HAND ANCHOR (Depth Z=0 in the 3D scene) */
+/* ANIMATED PHOTOREALISTIC 3D HAND */
 .hand-3d-anchor {
   position: absolute;
   bottom: 0px;
@@ -473,12 +514,40 @@ const animDuration = 28 // seconds per full 360 rotation
   align-items: flex-end;
   justify-content: center;
   pointer-events: none;
-  animation: hand-sway 7s ease-in-out infinite alternate;
+  animation: hand-levitate 6s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes hand-sway {
-  0% { transform: translateX(-50%) translateZ(0px) translateY(0) rotate(-0.5deg); }
-  100% { transform: translateX(-50%) translateZ(0px) translateY(-10px) rotate(0.8deg); }
+.hand-3d-anchor.hand-hover-active {
+  animation-play-state: paused;
+  transform: translateX(-50%) translateZ(8px) translateY(-10px) scale(1.02);
+}
+
+/* Organic 3D Hand Levitation Animation */
+@keyframes hand-levitate {
+  0% {
+    transform: translateX(-50%) translateZ(0px) translateY(0px) rotate(0deg);
+  }
+  28% {
+    transform: translateX(-50%) translateZ(8px) translateY(-14px) rotate(0.8deg);
+  }
+  65% {
+    transform: translateX(-50%) translateZ(3px) translateY(-6px) rotate(-0.6deg);
+  }
+  100% {
+    transform: translateX(-50%) translateZ(0px) translateY(0px) rotate(0deg);
+  }
+}
+
+.hand-anim-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
 }
 
 .hand-picture {
@@ -497,7 +566,7 @@ const animDuration = 28 // seconds per full 360 rotation
   filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(147, 51, 234, 0.45));
 }
 
-/* Fingertip "Ideas ignite" Energy Spark (Ref 2 Inspiration) */
+/* Fingertip "Ideas ignite" Energy Spark */
 .fingertip-spark {
   position: absolute;
   top: 40px;
@@ -560,26 +629,26 @@ const animDuration = 28 // seconds per full 360 rotation
   100% { transform: scale(2.8); opacity: 0; }
 }
 
-/* 3D ORBIT STAGE (Tilted Elliptical Ring) */
+/* 3D ORBIT STAGE (Tilted Ring) */
 .orbit-stage {
   position: absolute;
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  transform: rotateX(16deg);
+  transform: rotateX(15deg);
 }
 
-/* BILLBOARDED ORBIT TRACK:
-   Tile moves around the circle, but COUNTER-ROTATES so it ALWAYS FACES FORWARD!
-   Zero paper-thin edge-on artifacts! Full logo is visible at all angles! */
+/* 3D TRANSLATION ORBIT:
+   Moves in an elliptical circle around the hand.
+   Tiles maintain camera-facing orientation (NO FLIPPING, NO TURNING INTO KNIFE EDGES). */
 .tile-orbit-track {
   position: absolute;
-  top: -34px;
-  left: -34px;
-  width: 68px;
-  height: 68px;
+  top: -33px;
+  left: -33px;
+  width: 66px;
+  height: 66px;
   transform-style: preserve-3d;
-  animation: billboard-orbit 28s linear infinite;
+  animation: orbit-circle 32s linear infinite;
   pointer-events: auto;
 }
 
@@ -587,20 +656,31 @@ const animDuration = 28 // seconds per full 360 rotation
   animation-play-state: paused;
 }
 
-@keyframes billboard-orbit {
-  0% {
-    transform: rotateY(0deg) translateZ(240px) translateY(var(--tile-offset-y, 0px)) rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg) translateZ(240px) translateY(var(--tile-offset-y, 0px)) rotateY(-360deg);
-  }
+@keyframes orbit-circle {
+  0%     { transform: translate3d(0px, var(--tile-offset-y), 255px); }
+  6.25%  { transform: translate3d(97px, var(--tile-offset-y), 235px); }
+  12.5%  { transform: translate3d(180px, var(--tile-offset-y), 180px); }
+  18.75% { transform: translate3d(235px, var(--tile-offset-y), 97px); }
+  25%    { transform: translate3d(255px, var(--tile-offset-y), 0px); }
+  31.25% { transform: translate3d(235px, var(--tile-offset-y), -97px); }
+  37.5%  { transform: translate3d(180px, var(--tile-offset-y), -180px); }
+  43.75% { transform: translate3d(97px, var(--tile-offset-y), -235px); }
+  50%    { transform: translate3d(0px, var(--tile-offset-y), -255px); }
+  56.25% { transform: translate3d(-97px, var(--tile-offset-y), -235px); }
+  62.5%  { transform: translate3d(-180px, var(--tile-offset-y), -180px); }
+  68.75% { transform: translate3d(-235px, var(--tile-offset-y), -97px); }
+  75%    { transform: translate3d(-255px, var(--tile-offset-y), 0px); }
+  81.25% { transform: translate3d(-235px, var(--tile-offset-y), 97px); }
+  87.5%  { transform: translate3d(-180px, var(--tile-offset-y), 180px); }
+  93.75% { transform: translate3d(-97px, var(--tile-offset-y), 235px); }
+  100%   { transform: translate3d(0px, var(--tile-offset-y), 255px); }
 }
 
-/* 3D Squircle App Tile (Chunky, Bold, High-Visibility) */
+/* 3D SQUIRCLE TILE (DOUBLE-SIDED: LOGO ON BOTH FACES) */
 .app-squircle {
   position: relative;
-  width: 68px;
-  height: 68px;
+  width: 66px;
+  height: 66px;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -627,6 +707,24 @@ const animDuration = 28 // seconds per full 360 rotation
     0 22px 45px 2px var(--tile-glow);
 }
 
+/* Both sides show same information so blank tile can NEVER appear */
+.tile-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.front-face {
+  transform: translateZ(1px);
+}
+
+.back-face {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
 /* Glossy glass reflection curve across top half */
 .squircle-gloss {
   position: absolute;
@@ -636,7 +734,7 @@ const animDuration = 28 // seconds per full 360 rotation
   height: 48%;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.48) 0%,
     rgba(255, 255, 255, 0.12) 65%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -645,19 +743,9 @@ const animDuration = 28 // seconds per full 360 rotation
   z-index: 3;
 }
 
-.tile-icon-wrap {
-  position: relative;
-  z-index: 2;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .official-logo-img {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
