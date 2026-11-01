@@ -71,6 +71,19 @@ const eyes = computed(() => `translate(${(props.mx * 8).toFixed(1)}px, ${(props.
   box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8), 0 0 0 3px rgba(196, 181, 253, 0.25);
   overflow: hidden;
 }
+.visor::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; height: 2px;
+  background: #38bdf8;
+  box-shadow: 0 0 12px 2px #38bdf8;
+  animation: ai-scan 2.6s ease-in-out infinite alternate;
+  z-index: 4;
+}
+@keyframes ai-scan {
+  0% { top: 10%; opacity: 0.3; }
+  100% { top: 88%; opacity: 0.95; }
+}
 .visor::after { content: ''; position: absolute; top: 7px; left: 18px; width: 60px; height: 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.14); transform: rotate(-8deg); }
 .eyes { position: absolute; left: 0; right: 0; top: 20px; display: flex; justify-content: center; gap: 34px; transition: transform 0.15s ease-out; }
 .eye { width: 24px; height: 30px; border-radius: 12px; background: #EDE4FF; box-shadow: 0 0 14px 3px #A78BFA; animation: blinkeye 4.2s infinite; }

@@ -12,6 +12,7 @@ export const profile = {
 
 export const navLinks = [
   { id: 'skills', label: 'Skills' },
+  { id: 'ai', label: 'AI QA Tech' },
   { id: 'code', label: 'Code Standards' },
   { id: 'services', label: 'Services' },
   { id: 'projects', label: 'Case Studies' },
@@ -22,8 +23,8 @@ export const navLinks = [
 export const heroRoles = [
   'Playwright + TypeScript',
   'Selenium + Java + TestNG',
-  'API & contract testing',
-  'CI/CD pipeline integration',
+  'AI-Augmented Self-Healing QA',
+  'CI/CD Pipeline Sharding',
 ]
 
 export const heroStats = [
@@ -34,8 +35,8 @@ export const heroStats = [
 ]
 
 export const techStack = [
-  'Playwright', 'Selenium WebDriver', 'TypeScript', 'Java', 'TestNG', 'Cucumber BDD',
-  'GitHub Actions', 'Jenkins', 'Docker', 'Rest Assured', 'Postman / Newman', 'Allure Reports',
+  'Playwright', 'Selenium WebDriver', 'TypeScript', 'Java', 'TestNG', 'AI Self-Healing',
+  'GitHub Actions', 'Jenkins', 'Docker', 'Rest Assured', 'Visual AI', 'Postman / Newman', 'LLM Test Synthesis', 'Allure Reports',
 ]
 
 export interface SkillItem {
@@ -95,6 +96,45 @@ export const skills: SkillItem[] = [
     category: 'all',
     tags: ['Vue 3 SPAs', 'Vite', 'Composition API', 'Async Component Resilience', 'Flake Prevention'],
     level: 'Modern Web Fluency',
+  },
+  {
+    icon: 'AI',
+    title: 'AI-Augmented & Self-Healing QA',
+    desc: 'Next-generation test automation powered by AI: self-healing locators that adapt to DOM refactoring, LLM edge-case synthesis, and neural visual regression.',
+    category: 'all',
+    tags: ['Self-Healing Locators', 'Applitools Visual AI', 'LLM Prompt Fuzzing', 'Predictive Flake Triage', 'Playwright AI Agents'],
+    level: 'Next-Gen QA Tech',
+  },
+]
+
+export const aiCapabilities = [
+  {
+    icon: '🧠',
+    tag: 'RESILIENCE',
+    title: 'Self-Healing Locators',
+    desc: 'When frontend code refactors button IDs or class hierarchies, AI DOM semantic analysis dynamically resolves matching elements, preventing broken CI builds.',
+    metric: '94% reduction in locator maintenance',
+  },
+  {
+    icon: '👁️',
+    tag: 'COMPUTER VISION',
+    title: 'Neural Visual Regression',
+    desc: 'Deep learning pixel & layout inspection that filters out 1px rendering noise while pinpointing genuine overlapping elements and styling bugs.',
+    metric: '0 false-positive visual alerts',
+  },
+  {
+    icon: '⚡',
+    tag: 'SYNTHETIC DATA',
+    title: 'LLM Edge-Case Synthesis',
+    desc: 'Automated generation of complex international payloads, boundary condition datasets, and security edge cases without tedious manual spreadsheets.',
+    metric: '10x deeper test input coverage',
+  },
+  {
+    icon: '🔮',
+    tag: 'INTELLIGENCE',
+    title: 'Automated Root Cause Triage',
+    desc: 'Instant machine learning classification of CI failures into true regressions, transient network timeouts, or third-party API downtimes.',
+    metric: '< 60s failure root-cause analysis',
   },
 ]
 

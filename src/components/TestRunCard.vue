@@ -8,7 +8,7 @@ interface TestItem {
 }
 
 interface SuiteTab {
-  id: 'playwright' | 'api' | 'cicd'
+  id: 'playwright' | 'api' | 'cicd' | 'ai'
   label: string
   icon: string
   cmd: string
@@ -36,6 +36,22 @@ const suites: SuiteTab[] = [
       { name: 'dashboard › charts render without layout shifts', time: '1.1s' },
       { name: 'checkout › cart updates dynamically across 2 tabs', time: '1.3s' },
       { name: 'visual › checkout review page matches pixel baseline', time: '1.1s' },
+    ],
+  },
+  {
+    id: 'ai',
+    label: 'AI Self-Healing',
+    icon: '🧠',
+    cmd: 'playwright-ai test --heal --neural-vision',
+    runner: 'AI Neural Agent active · Self-healing dynamic DOM changes',
+    totalTests: 5,
+    estDuration: '4.2s',
+    tests: [
+      { name: 'checkout › [AI HEALED] #pay-button → button[data-testid="pay-now"]', time: '42ms' },
+      { name: 'auth › [AI VISION] Detected 0 layout regressions on modal', time: '180ms' },
+      { name: 'fuzz › [LLM SYNTH] Generated 50 edge-case international inputs', time: '210ms' },
+      { name: 'triage › [AI TRIAGE] Categorized failure: 0% code flake (99.8% server latency)', time: '65ms' },
+      { name: 'suite › [AUTO RECOVERY] 100% test pass with zero human manual intervention', time: '1.2s' },
     ],
   },
   {
@@ -72,7 +88,7 @@ const suites: SuiteTab[] = [
   },
 ]
 
-const activeTab = ref<'playwright' | 'api' | 'cicd'>('playwright')
+const activeTab = ref<'playwright' | 'api' | 'cicd' | 'ai'>('playwright')
 const currentSuite = computed(() => suites.find((s) => s.id === activeTab.value)!)
 
 const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -100,7 +116,7 @@ function rerun() {
   wait.value = 0
 }
 
-function setTab(tab: 'playwright' | 'api' | 'cicd') {
+function setTab(tab: 'playwright' | 'api' | 'cicd' | 'ai') {
   activeTab.value = tab
   step.value = 0
   wait.value = 0
