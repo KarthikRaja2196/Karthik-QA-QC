@@ -341,7 +341,7 @@ function onCardMove(e: PointerEvent) {
         </ol>
       </div>
 
-      <!-- 8+ Years Experience Timeline -->
+      <!-- 6+ Years Industry Experience Timeline (Graduated 2018 — Present) -->
       <div class="timeline-wrap">
         <h3 class="mono tag" style="color: var(--accent-soft); font-size: 14px; margin-top: 40px;">
           // CAREER TRACK RECORD & MILESTONES

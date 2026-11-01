@@ -28,7 +28,7 @@ export const heroRoles = [
 ]
 
 export const heroStats = [
-  { value: '8+', label: 'Years in QA automation' },
+  { value: '6+', label: 'Years in QA automation' },
   { value: '15+', label: 'Production frameworks delivered' },
   { value: '600+', label: 'End-to-end tests automated' },
   { value: '0', label: 'Flaky tests tolerated' },
@@ -63,7 +63,7 @@ export const skills: SkillItem[] = [
     desc: 'WebDriver automation for legacy and modern web apps, built on solid OOP design, custom locator strategies, and reusable utility layers.',
     category: 'e2e',
     tags: ['Selenium WebDriver 4', 'Page Factory / POM', 'Maven', 'Cucumber BDD', 'Explicit Waits'],
-    level: '8+ Years Experience',
+    level: '6+ Years Experience',
   },
   {
     icon: 'TG',
@@ -238,25 +238,25 @@ export const projects = [
 
 export const experienceMilestones = [
   {
-    period: '2022 — PRESENT',
-    role: 'Senior QA Automation Consultant / Freelance',
-    scope: 'Remote',
-    desc: 'Architecting Playwright and Selenium frameworks for startups and scale-ups. Sharding CI/CD pipelines, stabilizing flaky legacy suites, and mentoring team members on POM design.',
-    highlights: ['15+ production test suites delivered', 'Average 78% reduction in regression cycle times'],
+    period: '2023 — PRESENT',
+    role: 'Senior QA Automation Consultant & SDET',
+    scope: 'Active in Industry · Remote / Worldwide',
+    desc: 'Driving next-generation automation frameworks for scale-ups and high-velocity engineering teams. Architecting strict-typed Playwright + TypeScript suites, AI-assisted self-healing locators, and sharded CI/CD matrix runners.',
+    highlights: ['15+ production test suites delivered', 'Average 78% reduction in regression cycle times', 'Pioneering AI-augmented QA & MCP agent workflows'],
   },
   {
-    period: '2019 — 2022',
-    role: 'SDET / Automation Engineer',
-    scope: 'Enterprise Software',
-    desc: 'Built multi-browser automation frameworks using Selenium + TestNG + Maven. Integrated test runs into Jenkins pipelines with automated Slack triage and HTML reporting.',
-    highlights: ['Automated 300+ enterprise regression workflows', 'Engineered parallel test execution on Selenium Grid'],
+    period: '2021 — 2023',
+    role: 'Senior SDET / Automation Engineer',
+    scope: 'Enterprise Software & Core Platforms',
+    desc: 'Engineered high-throughput enterprise automation frameworks using Java + Selenium WebDriver 4 + TestNG. Built REST Assured contract validation layers and integrated automated quality gates into Jenkins pipelines.',
+    highlights: ['Automated 300+ enterprise regression workflows', 'Engineered parallel test execution on Selenium Grid with zero flakiness'],
   },
   {
-    period: '2016 — 2019',
-    role: 'QA Engineer',
-    scope: 'Web & API Testing',
-    desc: 'Executed end-to-end regression and API testing across web platforms. Transitioned teams from manual test spreadsheets to structured automated smoke testing.',
-    highlights: ['Conducted comprehensive REST API contract testing', 'Standardized test case repositories and defect tracking'],
+    period: '2018 — 2021',
+    role: 'QA Automation Engineer',
+    scope: 'College Graduated 2018 → Industry Kickoff',
+    desc: 'Completed college in 2018 and immediately launched full-time automation engineering career. Built automated regression suites, API smoke verification, and standardized test coverage across agile delivery sprints.',
+    highlights: ['Graduated college in 2018 and entered direct full-time QA automation engineering', 'Automated critical path REST APIs and cross-browser web workflows with Selenium, TestNG & Postman'],
   },
 ]
 
