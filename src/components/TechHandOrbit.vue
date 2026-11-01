@@ -11,8 +11,8 @@ const isPaused = ref(false)
 
 // Gentle 3D perspective tilt reacting to mouse position
 const tiltStyle = computed(() => {
-  const x = (props.mx || 0) * 16
-  const y = -(props.my || 0) * 12
+  const x = (props.mx || 0) * 14
+  const y = -(props.my || 0) * 10
   return {
     transform: `rotateY(${x.toFixed(1)}deg) rotateX(${y.toFixed(1)}deg)`,
   }
@@ -84,7 +84,7 @@ const techTiles: TechTile[] = [
     offsetY: 26,
   },
   {
-    name: 'GitHub',
+    name: 'GitHub Actions',
     category: 'DevOps',
     bgGradient: 'linear-gradient(145deg, #27272a 0%, #09090b 100%)',
     glowColor: 'rgba(161, 161, 170, 0.7)',
@@ -159,181 +159,67 @@ const techTiles: TechTile[] = [
 
 const totalTiles = techTiles.length
 // Radius of the 3D orbit cylinder (px)
-const radius = 245
+const radius = 235
 </script>
 
 <template>
-  <div class="tech-hand-stage" role="img" aria-label="3D hand encircled by orbiting QA and AI technology tiles">
+  <div class="tech-hand-stage" role="img" aria-label="Photorealistic 3D hand encircled by orbiting QA and AI technology tiles">
     <!-- Studio Ambient Vignette & Velvet Drapery Background -->
     <div class="studio-backdrop" aria-hidden="true">
       <div class="velvet-folds"></div>
       <div class="studio-spotlight"></div>
       
-      <!-- Typographic Headers matching reference image style -->
+      <!-- Studio Typography matching reference poster layout -->
       <div class="studio-typography">
         <div class="typo-quote">
           <span class="quote-line-1">Tests without structure</span>
           <span class="quote-line-2">Is just <strong class="noise-highlight">NOISE.</strong></span>
         </div>
         <div class="typo-tagline">
-          <span>Systems</span>
-          <span>over Flakiness.</span>
+          <span>Systems over Services.</span>
+          <span class="tagline-sub">AI-Augmented QA</span>
         </div>
       </div>
 
-      <!-- Bottom Studio Badge -->
+      <!-- Bottom Studio Badge (Clean English Tech Labels - Zero Arabic) -->
       <div class="studio-bottom-badges">
-        <span class="arabic-tag">هندسة الجودة والذكاء الاصطناعي</span>
-        <span class="brand-pill">qa.ai/karthik.tech <span class="arrow-glyph">↗</span></span>
+        <span class="tech-tag mono">// AUTOMATION ARCHITECTURE & AI</span>
+        <span class="brand-pill mono">qa.ai/karthik.tech <span class="arrow-glyph">↗</span></span>
       </div>
     </div>
 
+    <!-- 3D Perspective Stage -->
     <div class="stage-tilt" :style="tiltStyle">
       <!-- Deep 3D Ambient Space Rings -->
       <div class="orbit-glow" aria-hidden="true"></div>
       <div class="orbit-ring-guide guide-outer" aria-hidden="true"></div>
       <div class="orbit-ring-guide guide-inner" aria-hidden="true"></div>
 
-      <!-- THE 3D SCULPTED HAND (Center Stage) -->
-      <div class="hand-container" aria-hidden="true">
-        <svg
-          viewBox="0 0 340 500"
-          class="hand-svg"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <!-- Realistic Skin Gradient with Studio Lighting -->
-            <linearGradient id="skinMain" x1="50%" y1="0%" x2="50%" y2="100%">
-              <stop offset="0%" stop-color="#FFE4D9" />
-              <stop offset="25%" stop-color="#F2BAA8" />
-              <stop offset="55%" stop-color="#C2849D" />
-              <stop offset="85%" stop-color="#733B79" />
-              <stop offset="100%" stop-color="#301147" />
-            </linearGradient>
-
-            <!-- Dual Rim Lighting (Neon Violet Left, Sky Cyan Right) -->
-            <linearGradient id="rimLightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#C084FC" stop-opacity="0.95" />
-              <stop offset="20%" stop-color="#DDD6FE" stop-opacity="0.5" />
-              <stop offset="75%" stop-color="#38BDF8" stop-opacity="0.3" />
-              <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.95" />
-            </linearGradient>
-
-            <radialGradient id="palmShadeGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#5B215E" stop-opacity="0.8" />
-              <stop offset="80%" stop-color="#2D1146" stop-opacity="0.2" />
-              <stop offset="100%" stop-color="#1E0A30" stop-opacity="0" />
-            </radialGradient>
-
-            <filter id="handGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="6" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-
-          <!-- Forearm & Wrist rising into the scene -->
-          <path
-            d="M102 500 C96 420 106 350 118 290 C128 245 145 220 162 215 C178 220 196 245 208 290 C220 350 230 420 224 500 Z"
-            fill="url(#skinMain)"
+      <!-- PHOTOREALISTIC 3D SCULPTED HAND (Center of 3D Scene) -->
+      <div class="hand-3d-anchor" aria-hidden="true">
+        <picture class="hand-picture">
+          <source srcset="/images/hand-3d.webp" type="image/webp" />
+          <img
+            src="/images/hand-3d.png"
+            alt="3D Hand reaching upward"
+            class="hand-render-img"
+            loading="eager"
+            decoding="async"
           />
+        </picture>
 
-          <!-- Palm Base Shadow & Concavity -->
-          <ellipse cx="166" cy="270" rx="58" ry="42" fill="url(#palmShadeGrad)" />
+        <!-- Dynamic Ambient Violet Rim Light Overlays -->
+        <div class="hand-rim-glow" aria-hidden="true"></div>
 
-          <!-- Thumb (gracefully curved outward to the left) -->
-          <g class="finger-group thumb-group">
-            <path
-              d="M122 265 C102 250 72 220 70 185 C68 158 82 146 95 155 C110 166 126 210 136 245 Z"
-              fill="url(#skinMain)"
-            />
-            <!-- Thumb Knuckle Shading & Crease -->
-            <path d="M85 195 Q98 190 112 205" stroke="rgba(255,255,255,0.22)" stroke-width="2" stroke-linecap="round" fill="none" />
-            <!-- Thumb fingernail highlight -->
-            <ellipse cx="82" cy="160" rx="7.5" ry="11" transform="rotate(-18 82 160)" fill="#FFF5F2" opacity="0.7" />
-          </g>
-
-          <!-- Index Finger (reaching tall & curved) -->
-          <g class="finger-group index-group">
-            <path
-              d="M136 220 C132 165 125 110 132 55 C135 38 150 36 156 52 C164 105 165 165 163 220 Z"
-              fill="url(#skinMain)"
-            />
-            <!-- Joint crease lines -->
-            <path d="M135 150 Q146 148 158 152" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linecap="round" fill="none" />
-            <path d="M136 95 Q145 93 154 97" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linecap="round" fill="none" />
-            <!-- Fingernail reflection -->
-            <ellipse cx="144" cy="50" rx="6" ry="10" fill="#FFF5F2" opacity="0.8" />
-          </g>
-
-          <!-- Middle Finger (Tallest center finger) -->
-          <g class="finger-group middle-group">
-            <path
-              d="M161 215 C164 150 166 85 173 24 C175 8 192 9 194 26 C198 85 196 150 189 215 Z"
-              fill="url(#skinMain)"
-            />
-            <!-- Joint crease lines -->
-            <path d="M166 140 Q178 138 191 142" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linecap="round" fill="none" />
-            <path d="M168 80 Q179 78 190 82" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linecap="round" fill="none" />
-            <!-- Fingernail reflection -->
-            <ellipse cx="183" cy="22" rx="6.5" ry="11" fill="#FFF5F2" opacity="0.85" />
-          </g>
-
-          <!-- Ring Finger -->
-          <g class="finger-group ring-group">
-            <path
-              d="M187 220 C194 160 199 105 208 50 C210 35 225 38 227 54 C226 105 217 160 208 225 Z"
-              fill="url(#skinMain)"
-            />
-            <!-- Joint crease lines -->
-            <path d="M196 150 Q207 148 219 153" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linecap="round" fill="none" />
-            <path d="M201 95 Q211 93 221 97" stroke="rgba(255,255,255,0.22)" stroke-width="1.8" stroke-linecap="round" fill="none" />
-            <!-- Fingernail reflection -->
-            <ellipse cx="217" cy="48" rx="6" ry="10" fill="#FFF5F2" opacity="0.8" />
-          </g>
-
-          <!-- Pinky Finger -->
-          <g class="finger-group pinky-group">
-            <path
-              d="M206 240 C218 190 229 140 239 90 C241 76 254 79 255 93 C254 140 238 190 223 250 Z"
-              fill="url(#skinMain)"
-            />
-            <!-- Fingernail reflection -->
-            <ellipse cx="247" cy="88" rx="5.5" ry="9" fill="#FFF5F2" opacity="0.75" />
-          </g>
-
-          <!-- Palm Highlight Creases -->
-          <path
-            d="M116 250 Q160 235 208 248"
-            stroke="rgba(255, 255, 255, 0.28)"
-            stroke-width="2.5"
-            stroke-linecap="round"
-          />
-          <path
-            d="M132 278 Q166 268 198 285"
-            stroke="rgba(255, 255, 255, 0.2)"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-
-          <!-- Glowing Ambient Rim Light on Silhouettes -->
-          <path
-            d="M70 185 C68 158 82 146 95 155 C110 166 126 210 132 55 C135 38 150 36 156 52 C164 105 166 85 173 24 C175 8 192 9 194 26 C198 85 208 50 C210 35 225 38 227 54 C239 90 C241 76 254 79 255 93"
-            stroke="url(#rimLightGrad)"
-            stroke-width="3.5"
-            fill="none"
-            opacity="0.9"
-            filter="url(#handGlow)"
-          />
-        </svg>
-
-        <!-- Floating Energy Core hovered in palm -->
-        <div class="palm-core" aria-hidden="true">
-          <div class="core-flare"></div>
+        <!-- "Ideas ignite" AI Energy Spark at Fingertip (from Reference 2) -->
+        <div class="fingertip-spark" aria-hidden="true">
+          <div class="spark-core"></div>
+          <div class="spark-ring ring-1"></div>
+          <div class="spark-ring ring-2"></div>
         </div>
       </div>
 
-      <!-- 3D ORBITING RING OF SQUIRCLES (CYLINDER) -->
+      <!-- 3D ORBITING RING OF SQUIRCLES (CYLINDER ENCIRCLING THE HAND) -->
       <div
         class="orbit-carousel"
         :class="{ paused: isPaused }"
@@ -349,7 +235,7 @@ const radius = 245
           @mouseenter="hoveredTool = tile.name; isPaused = true"
           @mouseleave="hoveredTool = null; isPaused = false"
         >
-          <!-- 3D Chunky Squircle Tile with Beveled Extrusion -->
+          <!-- 3D Chunky Squircle Tile with Beveled Extrusion & Specular Gloss -->
           <div
             class="app-squircle"
             :style="{
@@ -357,13 +243,13 @@ const radius = 245
               '--tile-glow': tile.glowColor,
             }"
           >
-            <!-- 3D Beveled Side Wall (Extrusion illusion) -->
+            <!-- 3D Beveled Side Wall (Extrusion depth) -->
             <div class="squircle-bevel"></div>
 
             <!-- Glossy Glass Reflection Top Half -->
             <div class="squircle-gloss"></div>
 
-            <!-- Crisp Brand / Tech Vector Icon -->
+            <!-- Crisp Vector Tech Logo -->
             <div class="tile-icon-wrap">
               <!-- PLAYWRIGHT -->
               <svg v-if="tile.iconType === 'playwright'" viewBox="0 0 40 40" width="32" height="32">
@@ -380,7 +266,6 @@ const radius = 245
 
               <!-- JAVA -->
               <svg v-else-if="tile.iconType === 'java'" viewBox="0 0 40 40" width="32" height="32">
-                <!-- Coffee cup & stylized steam plume -->
                 <path d="M11 21 C11 28 15 32 22 32 C28 32 31 28 31 21 Z" fill="#FFF" />
                 <path d="M29 23 C33 23 35 24 35 26 C35 28 33 29 29 29" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" fill="none" />
                 <path d="M16 16 Q19 13 17 9" stroke="#FFF" stroke-width="2.2" stroke-linecap="round" fill="none" />
@@ -410,7 +295,6 @@ const radius = 245
 
               <!-- AI SELF-HEALING -->
               <svg v-else-if="tile.iconType === 'ai'" viewBox="0 0 40 40" width="32" height="32">
-                <!-- 4-point sparkle star with orbiting nodes -->
                 <path d="M20 6 L23.5 16.5 L34 20 L23.5 23.5 L20 34 L16.5 23.5 L6 20 L16.5 16.5 Z" fill="#FFF" />
                 <circle cx="30" cy="10" r="2.5" fill="#FFF" />
                 <circle cx="10" cy="30" r="2" fill="#FFF" />
@@ -426,7 +310,7 @@ const radius = 245
                 <polygon points="16 28 24 28 20 25" fill="#D33833" />
               </svg>
 
-              <!-- GITHUB -->
+              <!-- GITHUB ACTIONS -->
               <svg v-else-if="tile.iconType === 'github'" viewBox="0 0 40 40" width="32" height="32">
                 <path fill="#FFF" fill-rule="evenodd" d="M20 7 C12.8 7 7 12.8 7 20 C7 25.7 10.7 30.6 15.9 32.3 C16.5 32.4 16.8 32 16.8 31.7 C16.8 31.4 16.8 30.4 16.8 29.2 C13.2 30 12.4 27.5 12.4 27.5 C11.9 26 11 25.6 11 25.6 C9.8 24.8 11.1 24.8 11.1 24.8 C12.4 24.9 13.1 26.2 13.1 26.2 C14.3 28.3 16.3 27.6 17 27.3 C17.1 26.4 17.5 25.8 17.9 25.4 C15 25.1 12 24 12 18.9 C12 17.5 12.5 16.3 13.3 15.3 C13.2 15 12.7 13.6 13.4 11.8 C13.4 11.8 14.5 11.5 17 13.1 C18 12.8 19.1 12.7 20.1 12.7 C21.1 12.7 22.2 12.8 23.2 13.1 C25.7 11.5 26.8 11.8 26.8 11.8 C27.5 13.6 27 15 26.9 15.3 C27.7 16.3 28.2 17.5 28.2 18.9 C28.2 24 25.2 25.1 22.3 25.4 C22.8 25.8 23.2 26.6 23.2 27.9 C23.2 29.6 23.2 31.1 23.2 31.5 C23.2 31.9 23.5 32.4 24.1 32.3 C29.3 30.6 33 25.7 33 20 C33 12.8 27.2 7 20 7 Z" />
               </svg>
@@ -454,7 +338,6 @@ const radius = 245
 
               <!-- CLAUDE QA -->
               <svg v-else-if="tile.iconType === 'claude'" viewBox="0 0 40 40" width="32" height="32">
-                <!-- 8-ray generative starburst -->
                 <path d="M20 9 L22 17 L30 15 L24 21 L30 27 L22 25 L20 33 L18 25 L10 27 L16 21 L10 15 L18 17 Z" fill="#FFF" />
               </svg>
 
@@ -487,7 +370,7 @@ const radius = 245
   position: relative;
   width: 100%;
   max-width: 580px;
-  height: 520px;
+  height: 540px;
   perspective: 1200px;
   display: flex;
   align-items: center;
@@ -495,7 +378,7 @@ const radius = 245
   user-select: none;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(109, 40, 217, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75), 0 0 50px rgba(109, 40, 217, 0.35);
   border: 1px solid rgba(167, 139, 250, 0.25);
   background: #120724;
 }
@@ -529,9 +412,9 @@ const radius = 245
   position: absolute;
   top: 15%;
   left: 50%;
-  width: 360px;
-  height: 360px;
-  margin-left: -180px;
+  width: 380px;
+  height: 380px;
+  margin-left: -190px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(147, 51, 234, 0.45) 0%, rgba(91, 33, 182, 0.25) 45%, transparent 75%);
   filter: blur(40px);
@@ -573,19 +456,24 @@ const radius = 245
   color: #a855f7;
   font-weight: 900;
   letter-spacing: 0.05em;
-  text-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+  text-shadow: 0 0 14px rgba(168, 85, 247, 0.8);
 }
 
 .typo-tagline {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: #a78bfa;
   letter-spacing: 0.02em;
-  opacity: 0.85;
   line-height: 1.3;
+}
+
+.tagline-sub {
+  font-size: 10px;
+  color: #38bdf8;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .studio-bottom-badges {
@@ -599,17 +487,15 @@ const radius = 245
   z-index: 1;
 }
 
-.arabic-tag {
-  font-size: 12px;
+.tech-tag {
+  font-size: 11px;
   font-weight: 600;
-  color: rgba(216, 180, 254, 0.8);
-  font-family: system-ui, sans-serif;
+  color: rgba(216, 180, 254, 0.85);
   letter-spacing: 0.03em;
 }
 
 .brand-pill {
   font-size: 10px;
-  font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
   color: #e9d5ff;
   background: rgba(88, 28, 135, 0.5);
@@ -642,8 +528,8 @@ const radius = 245
 /* Ambient Back Glow & Guides */
 .orbit-glow {
   position: absolute;
-  width: 340px;
-  height: 340px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(56, 189, 248, 0.15) 50%, transparent 75%);
   filter: blur(50px);
@@ -671,62 +557,91 @@ const radius = 245
   transform: rotateX(72deg) translateZ(15px);
 }
 
-/* 3D Sculpted Hand Container */
-.hand-container {
+/* PHOTOREALISTIC 3D HAND ANCHOR */
+.hand-3d-anchor {
   position: absolute;
-  bottom: 0px;
-  width: 310px;
-  height: 450px;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(0px);
+  width: 250px;
+  height: 460px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  transform-style: preserve-3d;
-  transform: translateZ(10px);
   pointer-events: none;
   animation: hand-sway 7s ease-in-out infinite alternate;
 }
 
 @keyframes hand-sway {
-  0% { transform: translateZ(10px) translateY(0) rotate(-0.8deg); }
-  100% { transform: translateZ(10px) translateY(-12px) rotate(1deg); }
+  0% { transform: translateX(-50%) translateZ(0px) translateY(0) rotate(-0.5deg); }
+  100% { transform: translateX(-50%) translateZ(0px) translateY(-10px) rotate(0.8deg); }
 }
 
-.hand-svg {
+.hand-picture {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 35px rgba(126, 34, 206, 0.5));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.palm-core {
+.hand-render-img {
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(147, 51, 234, 0.45));
+}
+
+.hand-rim-glow {
   position: absolute;
-  top: 185px;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 30%, rgba(168, 85, 247, 0.25) 0%, transparent 60%);
+  mix-blend-mode: screen;
+}
+
+/* Fingertip "Ideas ignite" Energy Spark (Ref 2 Inspiration) */
+.fingertip-spark {
+  position: absolute;
+  top: 15px;
   left: 50%;
-  width: 40px;
-  height: 40px;
-  margin-left: -20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0%, #38bdf8 40%, rgba(168, 85, 247, 0.8) 75%, transparent 100%);
-  box-shadow: 0 0 25px 8px #38bdf8, 0 0 50px 14px rgba(168, 85, 247, 0.7);
-  animation: core-pulse 2.4s infinite ease-in-out;
-  transform: translateZ(35px);
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
 }
 
-.core-flare {
+.spark-core {
   position: absolute;
-  inset: -6px;
+  inset: 6px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.8);
-  animation: core-spin 6s linear infinite;
+  background: #ffffff;
+  box-shadow: 0 0 18px 4px #a855f7, 0 0 35px 8px #38bdf8;
+  animation: spark-pulse 1.8s infinite ease-in-out;
 }
 
-@keyframes core-pulse {
-  0%, 100% { transform: translateZ(35px) scale(0.9); opacity: 0.85; }
-  50% { transform: translateZ(35px) scale(1.18); opacity: 1; }
+.spark-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 85, 247, 0.7);
+  animation: spark-ripple 2.4s infinite ease-out;
 }
 
-@keyframes core-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.ring-2 {
+  animation-delay: 1.2s;
+  border-color: rgba(56, 189, 248, 0.6);
+}
+
+@keyframes spark-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.9; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+@keyframes spark-ripple {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.6); opacity: 0; }
 }
 
 /* 3D Orbiting Ring Carousel */
@@ -735,7 +650,7 @@ const radius = 245
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  animation: orbit-cyl 30s linear infinite;
+  animation: orbit-cyl 28s linear infinite;
 }
 
 .orbit-carousel.paused {
@@ -889,7 +804,7 @@ const radius = 245
 
 @media (max-width: 600px) {
   .tech-hand-stage {
-    height: 420px;
+    height: 440px;
     transform: scale(0.85);
   }
   .callout-desc {
